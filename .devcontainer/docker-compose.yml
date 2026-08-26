@@ -5,28 +5,53 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: cis047-app
     ports:
       - "80:80"
+      - "443:443"
       - "3000:3000"
     volumes:
       - ..:/workspaces/cis047-course-template
+      - /workspaces/cis047-course-template/node_modules
     environment:
       - APACHE_DOCUMENT_ROOT=/workspaces/cis047-course-template/public
+      - PHP_IDE_CONFIG=serverName=localhost
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - cis047-network
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
 
   db:
-    image: mysql:8.0
+    image: mariadb:latest
+    container_name: cis047-db
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=cis047_course
-      - MYSQL_USER=cis047_user
-      - MYSQL_PASSWORD=cis047_password
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cis047_course
+      MYSQL_USER: cis047_user
+      MYSQL_PASSWORD: cis047_password
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./mariadb.conf:/etc/mysql/conf.d/mariadb.conf
+    networks:
+      - cis047-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      timeout: 20s
+      retries: 10
+      start_period: 10s
+
+networks:
+  cis047-network:
+    driver: bridge
 
 volumes:
   db_data:
+    driver: local

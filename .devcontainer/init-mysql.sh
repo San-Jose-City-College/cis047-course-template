@@ -49,7 +49,7 @@ wait_for_mysql() {
     local attempt=1
 
     while [ $attempt -le $max_attempts ]; do
-        if mysqladmin ping -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" --silent 2>/dev/null; then
+        if MYSQL_PWD="$MYSQL_PASSWORD" mysqladmin ping -h"$MYSQL_HOST" -u"$MYSQL_USER" --silent > /dev/null 2>&1; then
             print_status "MySQL is ready and accepting connections"
             return 0
         fi
@@ -70,7 +70,7 @@ wait_for_mysql() {
 apply_course_database() {
     echo "Applying course database initialization: $COURSE_DB"
 
-    if mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$COURSE_DB" < /workspaces/cis047-course-template/.devcontainer/init-db.sql 2>/dev/null; then
+    if MYSQL_PWD="$MYSQL_PASSWORD" mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" "$COURSE_DB" < /workspaces/cis047-course-template/.devcontainer/init-db.sql; then
         print_status "Course database schema and sample data verified"
         return 0
     fi
@@ -83,7 +83,7 @@ verify_connectivity() {
     echo "Verifying database connectivity..."
 
     print_info "Testing root user connection..."
-    if mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" 2>/dev/null | grep -q 1; then
+    if MYSQL_PWD="$MYSQL_PASSWORD" mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -e "SELECT 1;" 2>/dev/null | grep -q 1; then
         print_status "Root user connection successful"
     else
         print_error "Root user connection failed"
@@ -91,7 +91,7 @@ verify_connectivity() {
     fi
 
     print_info "Testing application user connection..."
-    if mysql -h"$MYSQL_HOST" -u"$COURSE_USER" -p"$COURSE_PASSWORD" "$COURSE_DB" -e "SELECT 1;" 2>/dev/null | grep -q 1; then
+    if MYSQL_PWD="$COURSE_PASSWORD" mysql -h"$MYSQL_HOST" -u"$COURSE_USER" "$COURSE_DB" -e "SELECT 1;" 2>/dev/null | grep -q 1; then
         print_status "Application user connection successful"
     else
         print_warning "Application user connection failed"

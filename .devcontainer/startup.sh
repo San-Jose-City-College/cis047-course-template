@@ -66,7 +66,7 @@ echo "Attempting to connect to MySQL on host: db:3306"
 echo ""
 
 while [ $attempt -le $max_attempts ]; do
-    if mysqladmin ping -h"db" -u"root" -p"root" --silent 2>/dev/null; then
+    if MYSQL_PWD="root" mysqladmin ping -h"db" -u"root" --silent > /dev/null 2>&1; then
         print_status "MySQL is ready and accepting connections"
         break
     fi
@@ -89,7 +89,7 @@ echo ""
 print_header "Step 2: Applying Course Database Initialization"
 print_info "Running .devcontainer/init-db.sql against cis047_course..."
 
-if mysql -h"db" -u"root" -p"root" cis047_course < /workspaces/cis047-course-template/.devcontainer/init-db.sql 2>/dev/null; then
+if MYSQL_PWD="root" mysql -h"db" -u"root" cis047_course < /workspaces/cis047-course-template/.devcontainer/init-db.sql; then
     print_status "Course database schema and sample data verified"
 else
     print_warning "Database initialization reported issues"

@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS students (
     INDEX idx_enrollment_date (enrollment_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Migration guards keep existing database volumes in sync with the canonical
+-- students schema without failing when the columns already exist.
 SET @add_phone = IF(
     (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'students' AND COLUMN_NAME = 'phone') = 0,
     'ALTER TABLE students ADD COLUMN phone VARCHAR(20)',

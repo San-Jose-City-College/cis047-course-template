@@ -752,7 +752,7 @@ git checkout -b spring-2027 fall-2026
 | Add PHP extension | Edit `.devcontainer/Dockerfile`, add to RUN apt-get install |
 | Modify database | Edit `.devcontainer/init-db.sql` |
 | View student code | Go to GitHub → Navigate to assignment folder |
-| Reset database | Terminal: `docker-compose down` then `docker-compose up -d` |
+| Reset database | Terminal: `docker-compose down -v` then `docker-compose up -d` |
 | Check services | Terminal: `docker ps` |
 | Test Codespace | "Create codespace on main" button |
 | Archive semester | `git checkout -b archive/fall-2026` then `git push` |

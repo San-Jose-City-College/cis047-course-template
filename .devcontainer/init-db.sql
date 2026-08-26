@@ -54,6 +54,15 @@ PREPARE stmt FROM @add_enrollment_date;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
+SET @normalize_enrollment_date = IF(
+    (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'students' AND COLUMN_NAME = 'enrollment_date' LIMIT 1) <> 'date',
+    'ALTER TABLE students MODIFY COLUMN enrollment_date DATE',
+    'SELECT 1'
+);
+PREPARE stmt FROM @normalize_enrollment_date;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 CREATE TABLE IF NOT EXISTS courses (
     course_id INT AUTO_INCREMENT PRIMARY KEY,
     course_code VARCHAR(20) UNIQUE NOT NULL,

@@ -1,0 +1,33 @@
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# MySQL
+*.sql.bak
+
+# OS files
+Thumbs.db
+
+# Compiled files
+*.cache
+
+# Assignment submissions (optional - uncomment if needed)
+# assignments/*/node_modules/
+# assignments/*/.env

@@ -1,7 +1,7 @@
 <?php
 /**
  * ============================================================================
- * CIS 047 - Add Customer Example
+ * CIS 047 - Add Student Example
  * ============================================================================
  * 
  * File: add-customer.php
@@ -17,10 +17,6 @@
  * - Displaying success/error messages
  * - Handling database errors gracefully
  * 
- * Note: This example demonstrates inserting into a 'customers' table
- *       which should be created first. The form shows best practices
- *       for data collection and validation.
- * 
  * ============================================================================
  */
 
@@ -33,8 +29,8 @@ ini_set('display_errors', 1);
 // ============================================================================
 
 $db_host = 'db';
-$db_user = 'root';
-$db_password = 'root';
+$db_user = 'cis047_user';
+$db_password = 'cis047_password';
 $db_name = 'classdb';
 $db_port = 3306;
 
@@ -65,7 +61,7 @@ $form_data = array(
     'last_name' => '',
     'email' => '',
     'phone' => '',
-    'city' => ''
+    'major' => ''
 );
 
 // ============================================================================
@@ -79,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $last_name = trim($_POST['last_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
-    $city = trim($_POST['city'] ?? '');
+    $major = trim($_POST['major'] ?? '');
 
     // Store form data for re-display in case of error
     $form_data = array(
@@ -87,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'last_name' => $last_name,
         'email' => $email,
         'phone' => $phone,
-        'city' => $city
+        'major' => $major
     );
 
     // ====================================================================
@@ -103,10 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error_message = "Email is required.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Please enter a valid email address.";
-    } elseif (empty($phone)) {
-        $error_message = "Phone number is required.";
-    } elseif (empty($city)) {
-        $error_message = "City is required.";
+    } elseif (empty($major)) {
+        $error_message = "Major is required.";
     }
 
     // If validation passed, insert the data into the database
@@ -117,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Use a prepared statement to safely insert the data
         // This protects against SQL injection attacks
 
-        $query = "INSERT INTO customers (first_name, last_name, email, phone, city) 
-                  VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO students (first_name, last_name, email, phone, major, enrollment_date) 
+                  VALUES (?, ?, ?, ?, ?, CURDATE())";
 
         // Prepare the statement
         $stmt = $conn->prepare($query);
@@ -129,19 +123,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Bind the form data to the prepared statement
             // 'sssss' means all 5 parameters are strings
-            $stmt->bind_param('sssss', $first_name, $last_name, $email, $phone, $city);
+            $stmt->bind_param('sssss', $first_name, $last_name, $email, $phone, $major);
 
             // Execute the prepared statement
             if ($stmt->execute()) {
                 // Insert was successful
-                $success_message = "Customer added successfully! ID: " . $stmt->insert_id;
+                $success_message = "Student added successfully! ID: " . $stmt->insert_id;
                 // Clear the form
                 $form_data = array(
                     'first_name' => '',
                     'last_name' => '',
                     'email' => '',
                     'phone' => '',
-                    'city' => ''
+                    'major' => ''
                 );
             } else {
                 // Insert failed
@@ -165,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIS 047 - Add Customer</title>
+    <title>CIS 047 - Add Student</title>
     <style>
         * {
             margin: 0;
@@ -368,7 +362,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container">
         <div class="header">
-            <h1>➕ Add Customer</h1>
+            <h1>➕ Add Student</h1>
             <p>CIS 047 - Intro to Web Development</p>
         </div>
 
@@ -385,8 +379,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
 
             <div class="form-info">
-                📝 This form demonstrates how to insert new customer records into a database using PHP. 
-                All fields are required and email must be unique.
+                📝 This form demonstrates how to insert new student records into a database using PHP. 
+                First name, last name, email, and major are required. Email must be unique.
             </div>
 
             <!-- Add Customer Form -->
@@ -454,22 +448,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="city">
-                        City <span class="required">*</span>
+                    <label for="major">
+                        Major <span class="required">*</span>
                     </label>
                     <input 
                         type="text" 
-                        id="city" 
-                        name="city" 
-                        value="<?php echo htmlspecialchars($form_data['city']); ?>"
-                        placeholder="e.g., San Jose"
+                        id="major" 
+                        name="major" 
+                        value="<?php echo htmlspecialchars($form_data['major']); ?>"
+                        placeholder="e.g., Computer Science"
                         required
                     >
-                    <div class="form-hint">Enter the customer's city</div>
+                    <div class="form-hint">Enter the student's field of study</div>
                 </div>
 
                 <div class="button-group">
-                    <button type="submit">Add Customer</button>
+                    <button type="submit">Add Student</button>
                     <button type="reset">Clear Form</button>
                 </div>
             </form>
@@ -478,11 +472,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee;">
                 <h3 style="color: #333; margin-bottom: 15px; font-size: 14px;">How This Works:</h3>
                 <ol style="color: #666; font-size: 13px; line-height: 1.8; margin-left: 20px;">
-                    <li>User fills out the form with customer information</li>
+                    <li>User fills out the form with student information</li>
                     <li>Form is submitted using POST method</li>
-                    <li>PHP validates that all fields are filled correctly</li>
+                    <li>PHP validates that all required fields are filled correctly</li>
                     <li>A prepared statement is created to insert the data safely</li>
-                    <li>The database inserts the new customer record</li>
+                    <li>The database inserts the new student record</li>
                     <li>Success or error message is displayed to the user</li>
                     <li>Form is cleared if successful, keeping data if there's an error</li>
                 </ol>

@@ -16,8 +16,8 @@
  * Database Connection Details:
  *   - Host: db (Docker container hostname)
  *   - Database: classdb
- *   - User: root
- *   - Password: root
+ *   - User: cis047_user
+ *   - Password: cis047_password
  *   - Port: 3306 (default MySQL port)
  * 
  * ============================================================================
@@ -35,8 +35,8 @@ ini_set('display_errors', 1);
 // accessible from the web root.
 
 $db_host = 'db';           // Host name or IP address of MySQL server
-$db_user = 'root';         // MySQL user name
-$db_password = 'root';     // MySQL password
+$db_user = 'cis047_user';         // MySQL user name
+$db_password = 'cis047_password';     // MySQL password
 $db_name = 'classdb';      // Database name
 $db_port = 3306;           // MySQL port (default is 3306)
 

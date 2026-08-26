@@ -1,17 +1,14 @@
 FROM mcr.microsoft.com/devcontainers/php:1-8.3-apache
 
-# Install system dependencies and tools
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     mariadb-client \
-    mysql-client \
     git \
     zip \
     unzip \
     curl \
-    wget \
     vim \
     nano \
-    build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions required for web development
@@ -19,15 +16,10 @@ RUN docker-php-ext-install \
     mysqli \
     pdo \
     pdo_mysql \
-    pdo_pgsql \
-    opcache \
-    json
+    opcache
 
-# Install and enable additional useful PHP extensions
+# Install and enable Xdebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug
-
-# Install Composer globally
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Enable Apache modules
 RUN a2enmod rewrite && \
@@ -47,7 +39,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
 RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/99-custom.ini && \
     echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/99-custom.ini && \
     echo "xdebug.mode = debug" >> /usr/local/etc/php/conf.d/99-custom.ini && \
-    echo "xdebug.start_with_request = yes" >> /usr/local/etc/php/conf.d/99-custom.ini && \
+    echo "xdebug.start_with_request = trigger" >> /usr/local/etc/php/conf.d/99-custom.ini && \
     echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/99-custom.ini && \
     echo "xdebug.client_port = 9003" >> /usr/local/etc/php/conf.d/99-custom.ini && \
     echo "post_max_size = 128M" >> /usr/local/etc/php/conf.d/99-custom.ini && \

@@ -8,7 +8,7 @@
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "forwardPorts": [80, 443, 3306, 3000],
+    "forwardPorts": [80, 443, 3306],
     "portsAttributes": {
         "80": {
             "label": "Web Application (HTTP)",
@@ -20,10 +20,6 @@
         },
         "3306": {
             "label": "MySQL Database",
-            "onAutoForward": "silent"
-        },
-        "3000": {
-            "label": "Development Server",
             "onAutoForward": "silent"
         }
     },
@@ -51,8 +47,5 @@
             }
         }
     },
-    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/*.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh",
-    "mounts": [
-        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,readonly"
-    ]
+    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/*.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh"
 }

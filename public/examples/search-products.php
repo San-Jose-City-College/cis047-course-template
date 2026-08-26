@@ -29,8 +29,8 @@ ini_set('display_errors', 1);
 // ============================================================================
 
 $db_host = 'db';
-$db_user = 'root';
-$db_password = 'root';
+$db_user = 'cis047_user';
+$db_password = 'cis047_password';
 $db_name = 'classdb';
 $db_port = 3306;
 

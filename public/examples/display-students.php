@@ -24,31 +24,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // ============================================================================
-// Database Configuration
+// Database Connection
 // ============================================================================
+// Load shared database configuration. This gives us the $conn variable
+// without duplicating connection settings in every file.
 
-$db_host = 'db';
-$db_user = 'cis047_user';
-$db_password = 'cis047_password';
-$db_name = 'classdb';
-$db_port = 3306;
-
-// ============================================================================
-// Create Database Connection
-// ============================================================================
-// Create a new MySQLi connection object with the database credentials
-
-$conn = new mysqli($db_host, $db_user, $db_password, $db_name, $db_port);
-
-// Check if connection was successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Set character encoding to UTF-8
-if (!$conn->set_charset("utf8mb4")) {
-    die("Error loading character set utf8mb4: " . $conn->error);
-}
+require_once __DIR__ . '/../../database/config.php';
 
 // ============================================================================
 // Query the Students Table

@@ -30,6 +30,14 @@ Before you start, make sure you have:
 
 **No software to install.** All the tools you need (PHP, MySQL, Apache) are already set up in the cloud. ☁️
 
+> **📱 Using a tablet (iPad or Android)?**
+> Great news — this entire course works on a tablet! A few things to know:
+> - **Right-click** = **long-press** (hold your finger on an item for 1–2 seconds)
+> - **`Ctrl+` shortcuts** = **`Cmd+`** on iPad keyboards (e.g., `Cmd+Enter` to commit)
+> - **The VS Code command palette** (`Ctrl+Shift+P`) = tap the **`...`** menu in the VS Code toolbar if you don't have a physical keyboard
+> - **Browser DevTools (F12)** are not available on most tablet browsers — skip those steps, or connect to a desktop browser if needed
+> - Everything else (editing files, previewing your site, committing to GitHub) works exactly the same
+
 ---
 
 ## Getting Started
@@ -89,7 +97,7 @@ Click on any file in the explorer to open it. You'll see its contents in the mai
 
 ### Creating New Files
 
-Right-click in the File Explorer and select **"New File"**. Type a filename (like `index.html`) and press Enter.
+Right-click in the File Explorer and select **"New File"**. (On a tablet: long-press in the File Explorer.) Type a filename (like `index.html`) and press Enter.
 
 ### Editing Files
 
@@ -204,14 +212,12 @@ Open these files to see how to write your own database code!
 
 If you want to see the raw database directly:
 
-1. Open the **VS Code Command Palette** (press `Ctrl+Shift+P` on Windows or `Cmd+Shift+P` on Mac)
+1. Open the **VS Code Command Palette** (press `Ctrl+Shift+P` on Windows, `Cmd+Shift+P` on Mac, or tap the **`...`** menu in the toolbar on a tablet)
 2. Type **"MySQL"** and look for a MySQL client extension
 3. Follow the prompts to connect using the details above
 4. You can now browse tables and run SQL queries directly
 
 ---
-
-## Example Projects
 
 ## Example Projects
 
@@ -336,9 +342,9 @@ Complete assignment 3
 
 #### Step 4: Commit
 
-Press `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac) to commit.
+Press `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac/iPad with keyboard) to commit.
 
-Or click the **"✓"** (checkmark) button.
+Or click the **"✓"** (checkmark) button. (This is the easiest option on a tablet.)
 
 **[Screenshot: Commit button]**
 
@@ -387,15 +393,15 @@ If it still doesn't work:
 
 ### Problem: Website shows blank page or error
 
-1. Check the browser console for errors (press F12)
+1. Check the browser console for errors (press **F12** on desktop; on a tablet, skip this step or use desktop browser DevTools)
 2. Look at the PHP error messages
 3. Make sure your `.php` file is in the `public/` folder
 4. Check that your database connection details are correct
 
 ### Problem: Changes don't appear on website
 
-1. Save the file (Ctrl+S)
-2. Refresh the browser (F5 or Cmd+R)
+1. Save the file (`Ctrl+S` on Windows, `Cmd+S` on Mac/iPad, or just wait — saves automatically)
+2. Refresh the browser (`F5` on desktop, `Cmd+R` on Mac/iPad, or tap the browser refresh button)
 3. If it's a database change, the cache might need to clear
 
 ### Problem: File Explorer is empty or won't open
@@ -469,13 +475,14 @@ Your instructor is here to help! Come to office hours or email them with questio
 | Task | How To |
 |------|--------|
 | Open your Codespace | GitHub → Code → Codespaces → Select yours |
-| Create a new file | Right-click in File Explorer → New File |
+| Create a new file | Right-click (or long-press on tablet) in File Explorer → New File |
 | Preview your website | Click the port 80 link in Ports panel |
 | View a database table | Open port 80 link → navigate to `/examples/display-students.php` |
 | Save a file | Just keep typing (saves automatically) |
-| Make a commit | Source Control panel → Stage → Message → Commit |
+| Make a commit | Source Control panel → Stage → Message → click ✓ button |
 | Push to GitHub | Click Sync Changes button |
 | Check your code on GitHub | Go to repository → Click Commits |
+| Open command palette | `Ctrl+Shift+P` (Windows) / `Cmd+Shift+P` (Mac/iPad) / `...` menu (tablet) |
 
 ---
 

@@ -8,15 +8,11 @@
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "forwardPorts": [80, 443, 3306],
+    "forwardPorts": [80, 3306],
     "portsAttributes": {
         "80": {
             "label": "Web Application (HTTP)",
             "onAutoForward": "notify"
-        },
-        "443": {
-            "label": "Web Application (HTTPS)",
-            "onAutoForward": "silent"
         },
         "3306": {
             "label": "MySQL Database",

@@ -31,7 +31,7 @@ echo ""
 
 print_info "Waiting for MySQL database to be ready..."
 
-max_attempts=30
+max_attempts=60
 attempt=1
 
 while [ $attempt -le $max_attempts ]; do
@@ -41,8 +41,9 @@ while [ $attempt -le $max_attempts ]; do
     fi
 
     if [ $attempt -eq $max_attempts ]; then
-        print_error "MySQL did not become ready in time. Check the Ports panel and try reloading the Codespace."
-        exit 1
+        print_warning "MySQL was not ready after ${max_attempts}s. The database may still be starting."
+        print_warning "Wait 30 seconds, then refresh the page. If the problem persists, reload the Codespace."
+        break
     fi
 
     echo "  Waiting for MySQL... ($attempt/$max_attempts)"

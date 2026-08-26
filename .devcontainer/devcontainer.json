@@ -19,7 +19,7 @@
             "onAutoForward": "silent"
         },
         "3306": {
-            "label": "MySQL/MariaDB",
+            "label": "MySQL Database",
             "onAutoForward": "silent"
         },
         "3000": {
@@ -51,7 +51,7 @@
             }
         }
     },
-    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/startup.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh",
+    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/*.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh",
     "mounts": [
         "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,readonly"
     ]

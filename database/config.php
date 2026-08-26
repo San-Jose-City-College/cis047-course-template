@@ -5,9 +5,9 @@
  */
 
 // Database credentials
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_SERVER', 'db');
+define('DB_USERNAME', 'cis047_user');
+define('DB_PASSWORD', 'cis047_password');
 define('DB_NAME', 'cis047_course');
 
 // Create connection

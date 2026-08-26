@@ -28,15 +28,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// ============================================================================
-// Database Configuration
-// ============================================================================
-
-$db_host = 'db';
-$db_user = 'root';
-$db_password = 'root';
-$db_name = 'classdb';
-$db_port = 3306;
+require __DIR__ . '/db-config.php';
 
 // ============================================================================
 // Create Database Connection

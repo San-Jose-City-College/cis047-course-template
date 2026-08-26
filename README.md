@@ -173,19 +173,22 @@ The database is already running and ready to use! The course includes sample dat
 ### Database Connection Details
 
 - **Host:** `db`
-- **Database:** `classdb`
-- **Username:** `root`
-- **Password:** `root`
+- **Database:** `cis047_course`
+- **Username:** `cis047_user`
+- **Password:** `cis047_password`
 
 ### Sample Data
 
-The database includes two tables:
+The database includes sample data plus the tables used by the example apps:
 
 **students** table:
 - student_id, first_name, last_name, email, major, gpa, enrollment_date, phone
 
 **products** table:
 - product_id, product_name, category, price, quantity_stock, supplier, description, sku
+
+**customers** table:
+- customer_id, first_name, last_name, email, phone, city
 
 ### Using the Examples
 

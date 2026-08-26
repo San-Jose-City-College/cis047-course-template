@@ -208,7 +208,7 @@ sudo systemctl status apache2
 
 **Check MySQL connectivity:**
 ```bash
-mysql -h db -u root -proot -e "SELECT 1"
+mysql -h db -u cis047_user -pcis047_password cis047_course -e "SELECT 1"
 ```
 
 **View PHP version:**
@@ -332,7 +332,7 @@ git push origin assignments/spring-2024
 
 ### Understanding the Database Setup
 
-The `database/sample.sql` file contains:
+The `.devcontainer/init-db.sql` file is the canonical database initialization source. It contains:
 
 **Schema (Table Structure):**
 ```sql
@@ -348,7 +348,7 @@ CREATE TABLE students (
 );
 ```
 
-**Sample Data (10 students with diverse names):**
+**Sample Data (5 students plus product seed data):**
 - Names reflect San Jose area demographics
 - Realistic emails and phone numbers
 - Varying GPAs for teaching examples
@@ -357,7 +357,7 @@ CREATE TABLE students (
 
 **To add more students:**
 
-1. Open `database/sample.sql` in your Codespace
+1. Open `.devcontainer/init-db.sql` in your Codespace
 2. Scroll to the INSERT statements
 3. Add a new student record:
 
@@ -369,11 +369,11 @@ VALUES
 ```
 
 4. Save the file
-5. The database will reload with new data when the container restarts
+5. Reset the database volume to reload the canonical sample data
 
 **To modify table structure:**
 
-1. Open `database/sample.sql`
+1. Open `.devcontainer/init-db.sql`
 2. Find the `CREATE TABLE` statement
 3. Add new columns (example - add a `gpa_status` field):
 
@@ -381,7 +381,7 @@ VALUES
 ALTER TABLE students ADD COLUMN gpa_status VARCHAR(50);
 ```
 
-4. Restart the Codespace for changes to take effect
+4. Reset the database volume for the schema changes to take effect
 
 ### Connecting to MySQL Directly
 
@@ -389,8 +389,8 @@ Sometimes you want to query the database manually:
 
 **From Codespace Terminal:**
 ```bash
-# Connect to MySQL
-mysql -h db -u root -proot classdb
+# Connect to MySQL with the student application credentials
+mysql -h db -u cis047_user -pcis047_password cis047_course
 
 # You now see the MySQL prompt (mysql>)
 # Run SQL commands:
@@ -403,7 +403,7 @@ mysql> EXIT;
 1. Install "MySQL" extension in VS Code
 2. Click the MySQL icon in the sidebar
 3. Click "New Connection"
-4. Host: `db`, User: `root`, Password: `root`, Database: `classdb`
+4. Host: `db`, User: `cis047_user`, Password: `cis047_password`, Database: `cis047_course`
 5. Browse tables visually and run queries
 
 ### Resetting the Database
@@ -412,10 +412,10 @@ If students corrupt the database (don't worry, this happens!):
 
 1. In the Codespace terminal:
 ```bash
-# Stop and remove MySQL container
-docker-compose down
+# Stop and remove the containers and database volume
+docker-compose down -v
 
-# Restart (automatically reinitializes from sample.sql)
+# Restart (automatically reinitializes from .devcontainer/init-db.sql)
 docker-compose up -d
 ```
 
@@ -538,7 +538,7 @@ git push origin main
 
 **2. Update Sample Data**
 
-Update `database/sample.sql` with new student/product data if needed.
+Update `.devcontainer/init-db.sql` with new student/product data if needed.
 
 **3. Update Course Content**
 
@@ -657,9 +657,9 @@ git checkout -b spring-2027 fall-2026
 **Symptoms:** Added data disappears after restart
 
 **Solution:**
-1. Database might be reverting to `sample.sql` on restart
+1. Database might be reinitialized from `.devcontainer/init-db.sql` after a volume reset
 2. To make persistent changes:
-   - Add INSERT statements to `database/sample.sql`
+   - Add INSERT statements to `.devcontainer/init-db.sql`
    - Or commit the change and restart the container
 3. Remember: Codespaces are temporary; data is preserved but not guaranteed
 
@@ -750,7 +750,7 @@ git checkout -b spring-2027 fall-2026
 | Add new assignment | Create folder in `assignments/` with README |
 | Update PHP version | Edit `.devcontainer/devcontainer.json`, change `php:8.2` to desired version |
 | Add PHP extension | Edit `.devcontainer/Dockerfile`, add to RUN apt-get install |
-| Modify database | Edit `database/sample.sql` |
+| Modify database | Edit `.devcontainer/init-db.sql` |
 | View student code | Go to GitHub → Navigate to assignment folder |
 | Reset database | Terminal: `docker-compose down` then `docker-compose up -d` |
 | Check services | Terminal: `docker ps` |

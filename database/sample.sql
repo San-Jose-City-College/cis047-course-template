@@ -3,7 +3,7 @@
 -- Sample Database Schema and Data
 -- ============================================================================
 -- 
--- Database: classdb
+-- Database: cis047_course
 -- Purpose: Educational database for students to practice SQL queries
 -- 
 -- This file creates sample tables and populates them with diverse, 
@@ -22,8 +22,8 @@
 -- DATABASE SETUP
 -- ============================================================================
 
--- Use the classdb database
-USE classdb;
+-- Use the cis047_course database
+USE cis047_course;
 
 -- ============================================================================
 -- TABLE 1: STUDENTS

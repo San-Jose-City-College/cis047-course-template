@@ -1,25 +1,29 @@
 {
     "name": "CIS 047 Web Development Course",
-    "image": "mcr.microsoft.com/devcontainers/php:1-8.2-apache",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/cis047-course-template",
+    "remoteUser": "root",
     "features": {
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "18"
-        },
+        "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "containerEnv": {
-        "APACHE_DOCUMENT_ROOT": "/workspaces/cis047-course-template/public"
-    },
-    "remoteUser": "root",
-    "postCreateCommand": "apt-get update && apt-get install -y mysql-client && a2enmod rewrite",
-    "forwardPorts": [80, 3000, 3306],
+    "forwardPorts": [80, 443, 3306, 3000],
     "portsAttributes": {
         "80": {
-            "label": "Application",
+            "label": "Web Application (HTTP)",
             "onAutoForward": "notify"
         },
+        "443": {
+            "label": "Web Application (HTTPS)",
+            "onAutoForward": "silent"
+        },
         "3306": {
-            "label": "MySQL",
+            "label": "MySQL/MariaDB",
+            "onAutoForward": "silent"
+        },
+        "3000": {
+            "label": "Development Server",
             "onAutoForward": "silent"
         }
     },
@@ -32,15 +36,23 @@
                 "esbenp.prettier-vscode",
                 "dbaeumer.vscode-eslint",
                 "felixbecker.php-debug",
-                "bmewburn.vscode-intellicode-api"
+                "bmewburn.vscode-intellicode-api",
+                "felixbecker.php-intellisense",
+                "cweijan.vscode-mysql-client2"
             ],
             "settings": {
                 "editor.formatOnSave": true,
                 "editor.defaultFormatter": "esbenp.prettier-vscode",
                 "[php]": {
-                    "editor.defaultFormatter": "felixbecker.php-pack"
-                }
+                    "editor.defaultFormatter": "felixbecker.php-intellisense"
+                },
+                "php.validate.executablePath": "/usr/local/bin/php",
+                "php.validate.run": "onSave"
             }
         }
-    }
+    },
+    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/startup.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh",
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,readonly"
+    ]
 }

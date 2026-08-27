@@ -66,7 +66,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 CIS 047 Course. All rights reserved.</p>
+        <p>&copy; 2026 CIS 047 Course. All rights reserved.</p>
     </footer>
 
     <script src="js/script.js"></script>

@@ -27,11 +27,7 @@ ini_set('display_errors', 1);
 // Database Configuration
 // ============================================================================
 
-$db_host = 'db';
-$db_user = 'root';
-$db_password = 'root';
-$db_name = 'classdb';
-$db_port = 3306;
+require_once __DIR__ . '/db-config.php';
 
 // ============================================================================
 // Create Database Connection
@@ -299,10 +295,10 @@ $num_rows = $result->num_rows;
 
                     // Output the table row with the student data
                     echo '<tr>
-                            <td>' . htmlspecialchars($row['student_id']) . '</td>
-                            <td class="student-name">' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['last_name']) . '</td>
-                            <td>' . htmlspecialchars($row['email']) . '</td>
-                            <td>' . htmlspecialchars($row['major']) . '</td>
+                            <td>' . htmlspecialchars($row['student_id'], ENT_QUOTES, 'UTF-8') . '</td>
+                            <td class="student-name">' . htmlspecialchars($row['first_name'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($row['last_name'], ENT_QUOTES, 'UTF-8') . '</td>
+                            <td>' . htmlspecialchars($row['email'], ENT_QUOTES, 'UTF-8') . '</td>
+                            <td>' . htmlspecialchars($row['major'], ENT_QUOTES, 'UTF-8') . '</td>
                             <td class="gpa ' . $gpa_class . '">' . number_format($row['gpa'], 2) . '</td>
                             <td>' . $enrollment_date . '</td>
                           </tr>';

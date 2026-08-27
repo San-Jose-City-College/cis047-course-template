@@ -28,11 +28,7 @@ ini_set('display_errors', 1);
 // Database Configuration
 // ============================================================================
 
-$db_host = 'db';
-$db_user = 'root';
-$db_password = 'root';
-$db_name = 'classdb';
-$db_port = 3306;
+require_once __DIR__ . '/db-config.php';
 
 // ============================================================================
 // Create Database Connection
@@ -387,7 +383,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
                         type="text" 
                         name="search" 
                         placeholder="Search by product name, category, or description..." 
-                        value="<?php echo htmlspecialchars($search_query); ?>"
+                        value="<?php echo htmlspecialchars($search_query, ENT_QUOTES, 'UTF-8'); ?>"
                         required
                     >
                     <button type="submit">Search</button>
@@ -402,14 +398,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
 
             // Check if there was an error
             if (!empty($error_message)) {
-                echo '<div class="error-message">' . htmlspecialchars($error_message) . '</div>';
+                echo '<div class="error-message">' . htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8') . '</div>';
             }
 
             // Check if a search was performed
             if ($search_results !== null) {
                 echo '<div class="results-section">';
                 echo '<div class="results-header">
-                        Found <strong>' . $num_results . '</strong> product(s) matching "' . htmlspecialchars($search_query) . '"
+                        Found <strong>' . $num_results . '</strong> product(s) matching "' . htmlspecialchars($search_query, ENT_QUOTES, 'UTF-8') . '"
                       </div>';
 
                 if ($num_results > 0) {
@@ -432,9 +428,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
 
                         // Display product card
                         echo '<div class="product-card">
-                                <div class="product-name">' . htmlspecialchars($row['product_name']) . '</div>
-                                <span class="product-category">' . htmlspecialchars($row['category']) . '</span>
-                                <div class="product-description">' . htmlspecialchars($row['description']) . '</div>
+                                <div class="product-name">' . htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8') . '</div>
+                                <span class="product-category">' . htmlspecialchars($row['category'], ENT_QUOTES, 'UTF-8') . '</span>
+                                <div class="product-description">' . htmlspecialchars($row['description'], ENT_QUOTES, 'UTF-8') . '</div>
                                 <div class="product-details">
                                     <div>
                                         <div class="product-price">$' . number_format($row['price'], 2) . '</div>

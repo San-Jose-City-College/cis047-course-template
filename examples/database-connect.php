@@ -15,9 +15,8 @@
  * 
  * Database Connection Details:
  *   - Host: db (Docker container hostname)
- *   - Database: classdb
- *   - User: root
- *   - Password: root
+ *   - Database: cis047_course
+ *   - User: cis047_user (see db-config.php — never use root in app code)
  *   - Port: 3306 (default MySQL port)
  * 
  * ============================================================================
@@ -30,15 +29,10 @@ ini_set('display_errors', 1);
 // ============================================================================
 // Database Configuration
 // ============================================================================
-// These variables store the database connection information.
-// In production, these should be stored in a separate config file not
-// accessible from the web root.
+// Load shared credentials from db-config.php so all examples stay in sync.
+// In production, store credentials outside the web root or in env variables.
 
-$db_host = 'db';           // Host name or IP address of MySQL server
-$db_user = 'root';         // MySQL user name
-$db_password = 'root';     // MySQL password
-$db_name = 'classdb';      // Database name
-$db_port = 3306;           // MySQL port (default is 3306)
+require_once __DIR__ . '/db-config.php';
 
 // ============================================================================
 // Create Connection
@@ -218,19 +212,19 @@ if (!$conn->set_charset("utf8mb4")) {
             <h3>Connection Details</h3>
             <div class="info-row">
                 <span class="label">Host:</span>
-                <span class="value"><?php echo $db_host; ?></span>
+                <span class="value"><?php echo htmlspecialchars($db_host, ENT_QUOTES, 'UTF-8'); ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Database:</span>
-                <span class="value"><?php echo $db_name; ?></span>
+                <span class="value"><?php echo htmlspecialchars($db_name, ENT_QUOTES, 'UTF-8'); ?></span>
             </div>
             <div class="info-row">
                 <span class="label">User:</span>
-                <span class="value"><?php echo $db_user; ?></span>
+                <span class="value"><?php echo htmlspecialchars($db_user, ENT_QUOTES, 'UTF-8'); ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Port:</span>
-                <span class="value"><?php echo $db_port; ?></span>
+                <span class="value"><?php echo (int)$db_port; ?></span>
             </div>
         </div>
 
@@ -238,11 +232,11 @@ if (!$conn->set_charset("utf8mb4")) {
             <h3>Server Information</h3>
             <div class="info-row">
                 <span class="label">MySQL Version:</span>
-                <span class="value"><?php echo $conn->server_info; ?></span>
+                <span class="value"><?php echo htmlspecialchars($conn->server_info, ENT_QUOTES, 'UTF-8'); ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Character Set:</span>
-                <span class="value"><?php echo $conn->character_set_name(); ?></span>
+                <span class="value"><?php echo htmlspecialchars($conn->character_set_name(), ENT_QUOTES, 'UTF-8'); ?></span>
             </div>
         </div>
 

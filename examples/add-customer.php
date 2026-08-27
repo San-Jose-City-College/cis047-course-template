@@ -32,11 +32,7 @@ ini_set('display_errors', 1);
 // Database Configuration
 // ============================================================================
 
-$db_host = 'db';
-$db_user = 'root';
-$db_password = 'root';
-$db_name = 'classdb';
-$db_port = 3306;
+require_once __DIR__ . '/db-config.php';
 
 // ============================================================================
 // Create Database Connection
@@ -376,11 +372,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Display Messages -->
             <?php
             if (!empty($success_message)) {
-                echo '<div class="success-message">✓ ' . htmlspecialchars($success_message) . '</div>';
+                echo '<div class="success-message">✓ ' . htmlspecialchars($success_message, ENT_QUOTES, 'UTF-8') . '</div>';
             }
 
             if (!empty($error_message)) {
-                echo '<div class="error-message">✗ ' . htmlspecialchars($error_message) . '</div>';
+                echo '<div class="error-message">✗ ' . htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8') . '</div>';
             }
             ?>
 
@@ -400,7 +396,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             type="text" 
                             id="first_name" 
                             name="first_name" 
-                            value="<?php echo htmlspecialchars($form_data['first_name']); ?>"
+                            value="<?php echo htmlspecialchars($form_data['first_name'], ENT_QUOTES, 'UTF-8'); ?>"
                             placeholder="e.g., Maria"
                             required
                         >
@@ -415,7 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             type="text" 
                             id="last_name" 
                             name="last_name" 
-                            value="<?php echo htmlspecialchars($form_data['last_name']); ?>"
+                            value="<?php echo htmlspecialchars($form_data['last_name'], ENT_QUOTES, 'UTF-8'); ?>"
                             placeholder="e.g., Gonzalez"
                             required
                         >
@@ -431,7 +427,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         type="email" 
                         id="email" 
                         name="email" 
-                        value="<?php echo htmlspecialchars($form_data['email']); ?>"
+                        value="<?php echo htmlspecialchars($form_data['email'], ENT_QUOTES, 'UTF-8'); ?>"
                         placeholder="e.g., maria.gonzalez@example.com"
                         required
                     >
@@ -446,7 +442,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         type="tel" 
                         id="phone" 
                         name="phone" 
-                        value="<?php echo htmlspecialchars($form_data['phone']); ?>"
+                        value="<?php echo htmlspecialchars($form_data['phone'], ENT_QUOTES, 'UTF-8'); ?>"
                         placeholder="e.g., (408) 555-0123"
                         required
                     >
@@ -461,7 +457,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         type="text" 
                         id="city" 
                         name="city" 
-                        value="<?php echo htmlspecialchars($form_data['city']); ?>"
+                        value="<?php echo htmlspecialchars($form_data['city'], ENT_QUOTES, 'UTF-8'); ?>"
                         placeholder="e.g., San Jose"
                         required
                     >

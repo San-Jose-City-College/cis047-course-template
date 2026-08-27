@@ -22,12 +22,7 @@
             <h2>Welcome to Your Course Template!</h2>
             <p>This GitHub Codespaces template provides everything you need to learn web development:</p>
             
-            <div class="content-grid">
-                <div class="card">
-                    <h3>📚 Lessons</h3>
-                    <p>Check the <code>lessons/</code> folder for course materials and learning objectives.</p>
-                </div>
-                
+            <div class="content-grid">                
                 <div class="card">
                     <h3>📝 Assignments</h3>
                     <p>View and submit all assignments on Canvas: <a href="https://sjeccd.instructure.com/courses/54703/assignments">sjeccd.instructure.com/courses/54703/assignments</a>.</p>

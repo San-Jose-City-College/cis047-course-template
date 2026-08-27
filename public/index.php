@@ -30,7 +30,7 @@
                 
                 <div class="card">
                     <h3>📝 Assignments</h3>
-                    <p>Complete assignments in the <code>assignments/</code> folder. Read the README in each assignment folder.</p>
+                    <p>View and submit all assignments on Canvas: <a href="https://sjeccd.instructure.com/courses/54703/assignments">sjeccd.instructure.com/courses/54703/assignments</a>.</p>
                 </div>
                 
                 <div class="card">

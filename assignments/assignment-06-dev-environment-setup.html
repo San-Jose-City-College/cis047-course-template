@@ -191,7 +191,7 @@
 
 <div class="callout warning">
     <strong>⚠️ Already done Assignment 02?</strong>
-    <p>If you completed Assignment 02 (Creating Your Professional GitHub Profile), you already have a GitHub account and the course repository has already been copied to your account. You are ready to start Part 1.</p>
+    <p>If you completed Assignment 02 (Creating Your Professional GitHub Profile), you already have a GitHub account. You are ready to start Part 1.</p>
     <p>If you have NOT done Assignment 02 yet, go do it now — it only takes a few minutes: <a href="https://sjeccd.instructure.com/courses/54703/assignments/1521765">Assignment 02 – Creating Your Professional GitHub Profile</a></p>
 </div>
 
@@ -199,23 +199,60 @@
 
 <h3>Instructions</h3>
 
-<h4>Part 1: Launch Your Codespace</h4>
+<h4>Part 1: Fork the Course Repository</h4>
 
-<p>A Codespace is a personal cloud computer that runs your web server. You will create one from the course repository.</p>
+<p>Before you can launch a Codespace, you need your own personal copy of the course repository. This is called a <strong>fork</strong>. A fork is a copy of someone else's repository that lives in your own GitHub account. You will do all your work in your fork — not in the instructor's original.</p>
+
+<p>You only need to do this <strong>once</strong> for the whole course.</p>
 
 <ol>
     <li>
-        <strong>Go to the course repository on GitHub.</strong><br>
-        Your instructor will give you the link, or you can go directly to:<br>
+        <strong>Go to the course repository on GitHub:</strong><br>
         <a href="https://github.com/markbranom/cis047-course-template" target="_blank">https://github.com/markbranom/cis047-course-template</a>
-        <div class="callout warning" style="margin-top: 10px;">
-            <strong>⚠️ Use YOUR copy of the repository, not the instructor's.</strong>
-            <p>Your instructor will give you a link to your own personal copy of the course repository — look for it in the Canvas assignment or in your course announcement. You should work in your copy, not the instructor's original at the link above. If you are not sure which repository to use, ask your instructor before continuing.</p>
-        </div>
+    </li>
+    <li>
+        <strong>Make sure you are signed in to GitHub.</strong> If you see a "Sign in" button in the top right, click it and sign in with your GitHub credentials.
+    </li>
+    <li>
+        <strong>Click the <code>Fork</code> button</strong> near the top right of the page (next to the Star and Watch buttons).
+        <div class="screenshot-placeholder">📸 [Screenshot: The Fork button in the upper-right area of a GitHub repository page]</div>
+    </li>
+    <li>
+        On the next screen, GitHub will ask you to confirm the fork settings:
+        <ul>
+            <li><strong>Owner:</strong> Make sure your GitHub username is selected (not someone else's account).</li>
+            <li><strong>Repository name:</strong> Leave it as <code>cis047-course-template</code> (the default is fine).</li>
+            <li>Leave all other settings at their defaults.</li>
+        </ul>
+    </li>
+    <li>
+        Click the green <strong>"Create fork"</strong> button.
+        <div class="screenshot-placeholder">📸 [Screenshot: "Create fork" confirmation page with your username as the owner]</div>
+    </li>
+    <li>
+        GitHub will redirect you to your forked copy. Notice that the page now shows <strong>YOUR-USERNAME/cis047-course-template</strong> at the top — this is your personal copy of the repository.
+        <div class="screenshot-placeholder">📸 [Screenshot: Your forked repository page showing YOUR-USERNAME/cis047-course-template]</div>
+    </li>
+</ol>
+
+<div class="callout success">
+    <strong>✅ You now have your own copy of the course repository!</strong>
+    <p>All your work will live here. Your instructor can see your fork, so this is also how you submit your assignments.</p>
+</div>
+
+<hr>
+
+<h4>Part 2: Launch Your Codespace</h4>
+
+<p>Now you will create a Codespace from <strong>your fork</strong>. A Codespace is a personal cloud computer that runs your web server — Apache, PHP, and MySQL — right in your browser.</p>
+
+<ol>
+    <li>
+        <strong>Make sure you are on your forked repository page</strong> (the URL should say <code>github.com/YOUR-USERNAME/cis047-course-template</code>). If you just finished the fork step above, you are already in the right place.
     </li>
     <li>
         <strong>Click the green <code>&lt;&gt; Code</code> button</strong> near the top right of the repository page.
-        <div class="screenshot-placeholder">📸 [Screenshot: Green "Code" button on GitHub repository page]</div>
+        <div class="screenshot-placeholder">📸 [Screenshot: Green "Code" button on YOUR forked repository page]</div>
     </li>
     <li>In the dropdown that appears, click the <strong>Codespaces</strong> tab.</li>
     <li>Click <strong>"Create codespace on main"</strong>.</li>
@@ -231,12 +268,12 @@
 
 <div class="callout">
     <strong>💡 Next time you open this assignment:</strong>
-    <p>You do NOT need to create a new Codespace every time. Go back to the repository, click the <strong>Code</strong> button, and under the <strong>Codespaces</strong> tab you will see your existing Codespace listed. Just click it to reopen it — your work will be right where you left off.</p>
+    <p>You do NOT need to create a new Codespace every time. Go back to <strong>your forked repository</strong>, click the <strong>Code</strong> button, and under the <strong>Codespaces</strong> tab you will see your existing Codespace listed. Just click it to reopen it — your work will be right where you left off.</p>
 </div>
 
 <hr>
 
-<h4>Part 2: Explore Your Environment</h4>
+<h4>Part 3: Explore Your Environment</h4>
 
 <p>Now that your Codespace is open, take a look around.</p>
 
@@ -292,7 +329,7 @@
 
 <hr>
 
-<h4>Part 3: Preview Your Website</h4>
+<h4>Part 4: Preview Your Website</h4>
 
 <p>Your web server (Apache) is already running. Now you will open the website it is serving.</p>
 
@@ -322,7 +359,7 @@
 
 <hr>
 
-<h4>Part 4: Open the Database Example Pages</h4>
+<h4>Part 5: Open the Database Example Pages</h4>
 
 <p>The course includes four example pages that demonstrate PHP and MySQL. Let's open them to verify the database is working.</p>
 
@@ -362,7 +399,7 @@
 
 <hr>
 
-<h4>Part 5: Make and Save a Change</h4>
+<h4>Part 6: Make and Save a Change</h4>
 
 <p>Now you will edit a file, preview your change, and save your work to GitHub. This is the same workflow you will use for every assignment in this course.</p>
 
@@ -429,7 +466,7 @@
         <strong>The display-students.php page</strong> showing the student table with records loaded.
     </li>
     <li>
-        <strong>Your GitHub repository page</strong> showing your most recent commit (the footer year update from Part 5).
+        <strong>Your GitHub repository page</strong> showing your most recent commit (the footer year update from Part 6).
         <ul>
             <li>The commit message and your GitHub username should be visible.</li>
         </ul>

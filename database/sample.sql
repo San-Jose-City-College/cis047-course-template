@@ -55,7 +55,7 @@ CREATE TABLE students (
     email VARCHAR(100) UNIQUE NOT NULL COMMENT 'Unique email address',
     major VARCHAR(100) NOT NULL COMMENT 'Field of study',
     gpa DECIMAL(3, 2) NOT NULL DEFAULT 3.5 COMMENT 'Cumulative GPA (0.0-4.0)',
-    enrollment_date DATE NOT NULL COMMENT 'Date of enrollment',
+    enrollment_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date of enrollment',
     phone VARCHAR(20) COMMENT 'Contact phone number',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Record update time',

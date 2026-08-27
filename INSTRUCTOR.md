@@ -343,7 +343,7 @@ CREATE TABLE students (
     email VARCHAR(100) UNIQUE,
     major VARCHAR(100),
     gpa DECIMAL(3,2),
-    enrollment_date DATE,
+    enrollment_date TIMESTAMP,
     phone VARCHAR(20)
 );
 ```

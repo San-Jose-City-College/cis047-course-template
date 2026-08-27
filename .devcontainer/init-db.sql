@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS students (
     phone VARCHAR(20),
     major VARCHAR(100),
     gpa DECIMAL(3,2),
-    enrollment_date DATE,
+    enrollment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_email (email),
@@ -47,19 +47,10 @@ DEALLOCATE PREPARE stmt;
 
 SET @add_enrollment_date = IF(
     (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'students' AND COLUMN_NAME = 'enrollment_date') = 0,
-    'ALTER TABLE students ADD COLUMN enrollment_date DATE',
+    'ALTER TABLE students ADD COLUMN enrollment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
     'SELECT 1'
 );
 PREPARE stmt FROM @add_enrollment_date;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
-SET @normalize_enrollment_date = IF(
-    IFNULL((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'students' AND COLUMN_NAME = 'enrollment_date' LIMIT 1), '') <> 'date',
-    'ALTER TABLE students MODIFY COLUMN enrollment_date DATE',
-    'SELECT 1'
-);
-PREPARE stmt FROM @normalize_enrollment_date;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 

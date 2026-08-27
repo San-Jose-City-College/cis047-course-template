@@ -16,8 +16,8 @@
  * Database Connection Details:
  *   - Host: db (Docker container hostname)
  *   - Database: classdb
- *   - User: root
- *   - Password: root
+ *   - User: cis047_user
+ *   - Password: cis047_password
  *   - Port: 3306 (default MySQL port)
  * 
  * ============================================================================
@@ -28,49 +28,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // ============================================================================
-// Database Configuration
+// Database Connection
 // ============================================================================
-// These variables store the database connection information.
-// In production, these should be stored in a separate config file not
-// accessible from the web root.
+// We load the shared database configuration file instead of repeating the
+// connection settings here. This is the recommended pattern — one place to
+// update credentials if they ever change.
+//
+// The require_once statement loads database/config.php and makes the $conn
+// variable available in this script.
 
-$db_host = 'db';           // Host name or IP address of MySQL server
-$db_user = 'root';         // MySQL user name
-$db_password = 'root';     // MySQL password
-$db_name = 'classdb';      // Database name
-$db_port = 3306;           // MySQL port (default is 3306)
-
-// ============================================================================
-// Create Connection
-// ============================================================================
-// The mysqli() constructor creates a new database connection.
-// It takes 4 parameters: host, user, password, and database name.
-// 
-// The connection is stored in the $conn variable so we can use it
-// to perform database queries.
-
-$conn = new mysqli($db_host, $db_user, $db_password, $db_name, $db_port);
-
-// ============================================================================
-// Check Connection for Errors
-// ============================================================================
-// If the connection fails, mysqli will set the connect_error property.
-// We check if there's an error and display an appropriate message.
-
-if ($conn->connect_error) {
-    // Connection failed - display error message and stop script
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// ============================================================================
-// Set Character Set
-// ============================================================================
-// Set the character set to UTF-8 to properly handle international characters.
-// This ensures data is stored and retrieved correctly.
-
-if (!$conn->set_charset("utf8mb4")) {
-    die("Error loading character set utf8mb4: " . $conn->error);
-}
+require_once __DIR__ . '/../../database/config.php';
 
 // ============================================================================
 // HTML Output
@@ -218,19 +185,19 @@ if (!$conn->set_charset("utf8mb4")) {
             <h3>Connection Details</h3>
             <div class="info-row">
                 <span class="label">Host:</span>
-                <span class="value"><?php echo $db_host; ?></span>
+                <span class="value"><?php echo DB_SERVER; ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Database:</span>
-                <span class="value"><?php echo $db_name; ?></span>
+                <span class="value"><?php echo DB_NAME; ?></span>
             </div>
             <div class="info-row">
                 <span class="label">User:</span>
-                <span class="value"><?php echo $db_user; ?></span>
+                <span class="value"><?php echo DB_USERNAME; ?></span>
             </div>
             <div class="info-row">
                 <span class="label">Port:</span>
-                <span class="value"><?php echo $db_port; ?></span>
+                <span class="value">3306</span>
             </div>
         </div>
 

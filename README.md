@@ -30,6 +30,14 @@ Before you start, make sure you have:
 
 **No software to install.** All the tools you need (PHP, MySQL, Apache) are already set up in the cloud. ☁️
 
+> **📱 Using a tablet (iPad or Android)?**
+> Great news — this entire course works on a tablet! A few things to know:
+> - **Right-click** = **long-press** (hold your finger on an item for 1–2 seconds)
+> - **`Ctrl+` shortcuts** = **`Cmd+`** on iPad keyboards (e.g., `Cmd+Enter` to commit)
+> - **The VS Code command palette** (`Ctrl+Shift+P`) = tap the **`...`** menu in the VS Code toolbar if you don't have a physical keyboard
+> - **Browser DevTools (F12)** are not available on most tablet browsers — skip those steps, or connect to a desktop browser if needed
+> - Everything else (editing files, previewing your site, committing to GitHub) works exactly the same
+
 ---
 
 ## Getting Started
@@ -89,7 +97,7 @@ Click on any file in the explorer to open it. You'll see its contents in the mai
 
 ### Creating New Files
 
-Right-click in the File Explorer and select **"New File"**. Type a filename (like `index.html`) and press Enter.
+Right-click in the File Explorer and select **"New File"**. (On a tablet: long-press in the File Explorer.) Type a filename (like `index.html`) and press Enter.
 
 ### Editing Files
 
@@ -115,8 +123,6 @@ Look at the bottom right of your editor. You'll see a section called **"Ports"**
 
 Click on the **port 80** or **http://localhost** link. This opens your website in a preview window.
 
-Or, right-click on an HTML file and select **"Open with Live Server"**.
-
 ### Viewing in a New Tab
 
 You can also click the **"Open in Browser"** button to see your site in a full web browser tab.
@@ -136,7 +142,7 @@ PHP is a programming language for building dynamic websites. The course includes
 
 ### Example Files
 
-Look in the **`examples/`** folder. You'll find:
+Look in the **`public/examples/`** folder. You'll find:
 
 - **`database-connect.php`** - Tests your database connection
 - **`display-students.php`** - Shows student records in a table
@@ -145,9 +151,13 @@ Look in the **`examples/`** folder. You'll find:
 
 ### Running Examples
 
-1. Open an example file in the editor
-2. Right-click and select **"Open with Live Server"**
-3. The preview opens and shows the PHP output
+PHP files must be served through the web server (Apache) to execute — they won't work if you open them directly from the file explorer.
+
+1. Open the **Ports** panel at the bottom of the editor
+2. Click the link next to **port 80** to open your site in the browser
+3. Add `/examples/database-connect.php` to the end of the URL
+
+For example: `https://[your-codespace-name].preview.app.github.dev/examples/database-connect.php`
 
 ### Writing Your Own PHP
 
@@ -174,8 +184,8 @@ The database is already running and ready to use! The course includes sample dat
 
 - **Host:** `db`
 - **Database:** `classdb`
-- **Username:** `root`
-- **Password:** `root`
+- **Username:** `cis047_user`
+- **Password:** `cis047_password`
 
 ### Sample Data
 
@@ -189,12 +199,12 @@ The database includes two tables:
 
 ### Using the Examples
 
-The **example files** in the `examples/` folder show you how to query this data with PHP:
+The **example files** in the `public/examples/` folder show you how to query this data with PHP:
 
 1. **database-connect.php** - Verifies the connection works
 2. **display-students.php** - Runs a SELECT query and displays results in a table
 3. **search-products.php** - Takes user input and searches the database
-4. **add-customer.php** - Takes form data and inserts a new record
+4. **add-customer.php** - Takes form data and inserts a new student record
 
 Open these files to see how to write your own database code!
 
@@ -202,7 +212,7 @@ Open these files to see how to write your own database code!
 
 If you want to see the raw database directly:
 
-1. Open the **VS Code Command Palette** (press `Ctrl+Shift+P` on Windows or `Cmd+Shift+P` on Mac)
+1. Open the **VS Code Command Palette** (press `Ctrl+Shift+P` on Windows, `Cmd+Shift+P` on Mac, or tap the **`...`** menu in the toolbar on a tablet)
 2. Type **"MySQL"** and look for a MySQL client extension
 3. Follow the prompts to connect using the details above
 4. You can now browse tables and run SQL queries directly
@@ -211,7 +221,7 @@ If you want to see the raw database directly:
 
 ## Example Projects
 
-The `examples/` folder contains complete, working examples:
+The `public/examples/` folder contains complete, working examples:
 
 ### 1. Test Your Connection: database-connect.php
 
@@ -221,8 +231,8 @@ This shows you:
 - How to display the connection details
 
 **To test it:**
-1. Right-click `examples/database-connect.php`
-2. Select **"Open with Live Server"**
+1. Open port 80 in the Ports panel
+2. Navigate to `/examples/database-connect.php`
 3. You should see a success message and server details
 
 ### 2. Display Data: display-students.php
@@ -233,8 +243,8 @@ This shows you:
 - How to display results in an HTML table
 
 **To use it:**
-1. Right-click `examples/display-students.php`
-2. Select **"Open with Live Server"**
+1. Open port 80 in the Ports panel
+2. Navigate to `/examples/display-students.php`
 3. You'll see all students in a formatted table
 
 ### 3. Search Records: search-products.php
@@ -245,8 +255,8 @@ This shows you:
 - How to display search results
 
 **To use it:**
-1. Right-click `examples/search-products.php`
-2. Select **"Open with Live Server"**
+1. Open port 80 in the Ports panel
+2. Navigate to `/examples/search-products.php`
 3. Search for a product (try "wireless" or "desk")
 4. Results display in cards
 
@@ -258,10 +268,10 @@ This shows you:
 - How to insert a new record into the database
 
 **To use it:**
-1. Right-click `examples/add-customer.php`
-2. Select **"Open with Live Server"**
-3. Fill out the form and click "Add Customer"
-4. You'll see a success message with the new customer ID
+1. Open port 80 in the Ports panel
+2. Navigate to `/examples/add-customer.php`
+3. Fill out the form and click "Add Student"
+4. You'll see a success message with the new student ID
 
 ---
 
@@ -332,9 +342,9 @@ Complete assignment 3
 
 #### Step 4: Commit
 
-Press `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac) to commit.
+Press `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac/iPad with keyboard) to commit.
 
-Or click the **"✓"** (checkmark) button.
+Or click the **"✓"** (checkmark) button. (This is the easiest option on a tablet.)
 
 **[Screenshot: Commit button]**
 
@@ -383,15 +393,15 @@ If it still doesn't work:
 
 ### Problem: Website shows blank page or error
 
-1. Check the browser console for errors (press F12)
+1. Check the browser console for errors (press **F12** on desktop; on a tablet, skip this step or use desktop browser DevTools)
 2. Look at the PHP error messages
 3. Make sure your `.php` file is in the `public/` folder
 4. Check that your database connection details are correct
 
 ### Problem: Changes don't appear on website
 
-1. Save the file (Ctrl+S)
-2. Refresh the browser (F5 or Cmd+R)
+1. Save the file (`Ctrl+S` on Windows, `Cmd+S` on Mac/iPad, or just wait — saves automatically)
+2. Refresh the browser (`F5` on desktop, `Cmd+R` on Mac/iPad, or tap the browser refresh button)
 3. If it's a database change, the cache might need to clear
 
 ### Problem: File Explorer is empty or won't open
@@ -465,13 +475,14 @@ Your instructor is here to help! Come to office hours or email them with questio
 | Task | How To |
 |------|--------|
 | Open your Codespace | GitHub → Code → Codespaces → Select yours |
-| Create a new file | Right-click in File Explorer → New File |
+| Create a new file | Right-click (or long-press on tablet) in File Explorer → New File |
 | Preview your website | Click the port 80 link in Ports panel |
-| View a database table | Right-click `.php` file → Open with Live Server |
+| View a database table | Open port 80 link → navigate to `/examples/display-students.php` |
 | Save a file | Just keep typing (saves automatically) |
-| Make a commit | Source Control panel → Stage → Message → Commit |
+| Make a commit | Source Control panel → Stage → Message → click ✓ button |
 | Push to GitHub | Click Sync Changes button |
 | Check your code on GitHub | Go to repository → Click Commits |
+| Open command palette | `Ctrl+Shift+P` (Windows) / `Cmd+Shift+P` (Mac/iPad) / `...` menu (tablet) |
 
 ---
 

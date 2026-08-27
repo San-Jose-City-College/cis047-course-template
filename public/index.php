@@ -35,7 +35,7 @@
                 
                 <div class="card">
                     <h3>💡 Examples</h3>
-                    <p>View code examples in the <code>examples/</code> folder to learn from working code.</p>
+                    <p>View working code examples in the <code>public/examples/</code> folder. Open them directly in the browser via port 80.</p>
                 </div>
                 
                 <div class="card">
@@ -49,7 +49,7 @@
             <h2>Technology Stack</h2>
             <ul>
                 <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript ES6+</li>
-                <li><strong>Backend:</strong> PHP 8.2</li>
+                <li><strong>Backend:</strong> PHP 8.3</li>
                 <li><strong>Database:</strong> MySQL 8.0</li>
                 <li><strong>Environment:</strong> Apache 2.4</li>
             </ul>
@@ -58,9 +58,9 @@
         <section>
             <h2>Quick Links</h2>
             <ul>
-                <li><a href="../README.md">📖 View Full Documentation</a></li>
-                <li><a href="../examples/html-example.html">🔗 HTML Example</a></li>
-                <li><a href="../lessons/01-html-basics.md">📚 Lesson 1: HTML Basics</a></li>
+                <li><a href="examples/database-connect.php">🔗 Test Database Connection</a></li>
+                <li><a href="examples/display-students.php">👥 Display Students</a></li>
+                <li><a href="examples/html-example.html">🔗 HTML Example</a></li>
             </ul>
         </section>
     </main>

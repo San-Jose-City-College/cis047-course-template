@@ -71,7 +71,7 @@ A **Codespace** is a complete development environment running in the cloud. Thin
 **First Launch:**
 1. Student clicks "Create codespace on main"
 2. GitHub provisions a container (about 60 seconds)
-3. The `Dockerfile` runs, installing PHP 8.2, Apache, MySQL, extensions
+3. The `Dockerfile` runs, installing PHP 8.3, Apache, MySQL, extensions
 4. Port 80 (web), 3306 (MySQL) are forwarded to the student's browser
 5. Student sees the VS Code editor with your course files
 
@@ -100,21 +100,16 @@ cis047-course-template/
 │   ├── docker-compose.yml     # Multi-container orchestration
 │   └── startup.sh             # Initialization script
 │
-├── examples/
-│   ├── database-connect.php   # Test database connection
-│   ├── display-students.php   # Query and display data
-│   ├── search-products.php    # Search functionality
-│   └── add-customer.php       # Insert data
-│
-├── database/
-│   ├── sample.sql             # Schema and sample data
-│   └── init.sql               # Database initialization
-│
 ├── public/                     # Web root (what students visit)
 │   ├── index.php
 │   ├── css/
 │   ├── js/
-│   └── images/
+│   ├── images/
+│   └── examples/              # PHP examples (inside web root)
+│       ├── database-connect.php
+│       ├── display-students.php
+│       ├── search-products.php
+│       └── add-customer.php
 │
 ├── assignments/               # Student assignment folders
 │   ├── 01-html-basics/
@@ -133,8 +128,8 @@ Student's Browser
    Codespace (Browser-based VS Code)
         ↓
    ┌─────────────────┬─────────────────┐
-   ↓                 ↓                 ↓
-Apache (Port 80)  MySQL (Port 3306)  Node.js (Port 3000)
+   ↓                 ↓
+Apache (Port 80)  MySQL (Port 3306)
    ↓
  public/ folder
  (PHP files + HTML/CSS/JS)
@@ -147,7 +142,7 @@ This folder defines your entire environment. When a student launches a Codespace
 **devcontainer.json** - The main configuration file
 ```json
 {
-  "image": "mcr.microsoft.com/devcontainers/php:8.2",
+  "image": "mcr.microsoft.com/devcontainers/php:8.3",
   "features": {
     "ghcr.io/devcontainers/features/mysql": "8.0"
   },
@@ -159,7 +154,7 @@ This folder defines your entire environment. When a student launches a Codespace
       ]
     }
   },
-  "forwardPorts": [80, 3306, 3000]
+  "forwardPorts": [80, 3306]
 }
 ```
 
@@ -185,19 +180,8 @@ This folder defines your entire environment. When a student launches a Codespace
 Inside your Codespace:
 1. Look at the bottom panel in VS Code
 2. Click **"Terminal"** tab
-3. You can run commands like `docker ps` (see running containers)
+3. You can run commands to inspect the environment (e.g., `php -v`, `mysql -h db -u cis047_user -pcis047_password classdb`)
 4. View startup logs to debug issues
-
-#### View Running Services
-```bash
-# In the terminal, type:
-docker ps
-
-# Output shows:
-CONTAINER ID   NAMES
-abc123         apache-container
-def456         mysql-container
-```
 
 ### Common Terminal Commands
 
@@ -208,7 +192,7 @@ sudo systemctl status apache2
 
 **Check MySQL connectivity:**
 ```bash
-mysql -h db -u root -proot -e "SELECT 1"
+mysql -h db -u cis047_user -pcis047_password classdb -e "SELECT 1"
 ```
 
 **View PHP version:**
@@ -216,10 +200,9 @@ mysql -h db -u root -proot -e "SELECT 1"
 php --version
 ```
 
-**Restart services:**
+**Restart Apache:**
 ```bash
 sudo systemctl restart apache2
-sudo systemctl restart mysql
 ```
 
 ### Storage and Backups
@@ -390,7 +373,7 @@ Sometimes you want to query the database manually:
 **From Codespace Terminal:**
 ```bash
 # Connect to MySQL
-mysql -h db -u root -proot classdb
+mysql -h db -u cis047_user -pcis047_password classdb
 
 # You now see the MySQL prompt (mysql>)
 # Run SQL commands:
@@ -403,7 +386,7 @@ mysql> EXIT;
 1. Install "MySQL" extension in VS Code
 2. Click the MySQL icon in the sidebar
 3. Click "New Connection"
-4. Host: `db`, User: `root`, Password: `root`, Database: `classdb`
+4. Host: `db`, User: `cis047_user`, Password: `cis047_password`, Database: `classdb`
 5. Browse tables visually and run queries
 
 ### Resetting the Database
@@ -445,18 +428,18 @@ node --version
 
 ### Updating PHP
 
-The PHP version is specified in `.devcontainer/devcontainer.json`:
+The PHP version is specified in `.devcontainer/Dockerfile` (first line):
 
-```json
-"image": "mcr.microsoft.com/devcontainers/php:8.2"
+```dockerfile
+FROM mcr.microsoft.com/devcontainers/php:1-8.3-apache
 ```
 
-**To upgrade to PHP 8.3:**
+**To upgrade to a newer PHP version:**
 
-1. Edit `.devcontainer/devcontainer.json`
-2. Change `"php:8.2"` to `"php:8.3"`
+1. Edit `.devcontainer/Dockerfile`
+2. Change `8.3` to the desired version (e.g., `8.4`)
 3. Save and commit
-4. Students' next Codespace rebuild will use PHP 8.3
+4. Students' next Codespace rebuild will use the new PHP version
 
 **Note:** Rebuilding the container takes 60+ seconds.
 
@@ -465,12 +448,11 @@ The PHP version is specified in `.devcontainer/devcontainer.json`:
 If you need a PHP extension (like `imagick` for image processing):
 
 1. Edit `.devcontainer/Dockerfile`
-2. Add to the RUN section:
+2. Add to the `docker-php-ext-install` section, or add a new `RUN` block:
 
 ```dockerfile
-RUN apt-get update && apt-get install -y \
-    php8.2-imagick \
-    php8.2-gd
+RUN apt-get update && apt-get install -y libmagickwand-dev \
+    && pecl install imagick && docker-php-ext-enable imagick
 ```
 
 3. Save and commit
@@ -566,7 +548,6 @@ Create a `CHANGELOG.md` for instructors:
 
 ## Fixed
 - Issue with MySQL connection timeouts
-- Live Server port conflicts
 
 ## Removed
 - Old deprecated examples
@@ -621,15 +602,9 @@ git checkout -b spring-2027 fall-2026
 **Symptoms:** `mysqli_connect(): Connection refused`
 
 **Solution:**
-1. MySQL might still be starting (wait 30 seconds after launch)
-2. Check if MySQL container is running:
-   ```bash
-   docker ps | grep mysql
-   ```
-3. If not running, restart:
-   ```bash
-   docker-compose up -d mysql
-   ```
+1. MySQL might still be starting — wait 30 seconds after the Codespace opens, then refresh
+2. Check the Terminal for startup messages from `startup.sh`
+3. If the problem persists, close and reopen the Codespace to trigger a fresh container start
 
 #### Issue: PHP files show blank page
 
@@ -748,14 +723,14 @@ git checkout -b spring-2027 fall-2026
 | Task | How To |
 |------|--------|
 | Add new assignment | Create folder in `assignments/` with README |
-| Update PHP version | Edit `.devcontainer/devcontainer.json`, change `php:8.2` to desired version |
-| Add PHP extension | Edit `.devcontainer/Dockerfile`, add to RUN apt-get install |
+| Update PHP version | Edit `.devcontainer/Dockerfile`, change version number in first line |
+| Add PHP extension | Edit `.devcontainer/Dockerfile`, add to `docker-php-ext-install` |
 | Modify database | Edit `database/sample.sql` |
 | View student code | Go to GitHub → Navigate to assignment folder |
-| Reset database | Terminal: `docker-compose down` then `docker-compose up -d` |
-| Check services | Terminal: `docker ps` |
+| Reset database | Delete the Codespace (or Docker volume) and recreate — `sample.sql` re-loads automatically |
+| Check services | Terminal: `php -v` (PHP), `mysql -h db -u cis047_user -pcis047_password -e "SELECT 1"` (MySQL) |
 | Test Codespace | "Create codespace on main" button |
-| Archive semester | `git checkout -b archive/fall-2026` then `git push` |
+| Archive semester | `git checkout -b archive/fall-2026` then push |
 
 ---
 

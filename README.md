@@ -115,7 +115,7 @@ Look at the bottom right of your editor. You'll see a section called **"Ports"**
 
 Click on the **port 80** or **http://localhost** link. This opens your website in a preview window.
 
-Or, right-click on an HTML file and select **"Open with Live Server"**.
+For static HTML/CSS/JS files, you can also right-click and select **"Open with Live Server"** as an alternative.
 
 ### Viewing in a New Tab
 
@@ -145,9 +145,13 @@ Look in the **`examples/`** folder. You'll find:
 
 ### Running Examples
 
-1. Open an example file in the editor
-2. Right-click and select **"Open with Live Server"**
-3. The preview opens and shows the PHP output
+PHP files must be served by Apache to execute. **Do not use Live Server for PHP files** — Live Server only works for static HTML.
+
+Instead, use the **forwarded port 80** URL:
+
+1. In the **Ports** panel at the bottom of the editor, find **port 80** and click the globe icon to open it in your browser
+2. Append the file path to the URL, for example: `/examples/database-connect.php`
+3. The page loads and shows the PHP output from Apache
 
 ### Writing Your Own PHP
 
@@ -173,9 +177,9 @@ The database is already running and ready to use! The course includes sample dat
 ### Database Connection Details
 
 - **Host:** `db`
-- **Database:** `classdb`
-- **Username:** `root`
-- **Password:** `root`
+- **Database:** `cis047_course`
+- **Username:** `cis047_user`
+- **Password:** `cis047_password`
 
 ### Sample Data
 
@@ -221,8 +225,8 @@ This shows you:
 - How to display the connection details
 
 **To test it:**
-1. Right-click `examples/database-connect.php`
-2. Select **"Open with Live Server"**
+1. In the **Ports** panel, open port 80 in your browser
+2. Navigate to `/examples/database-connect.php`
 3. You should see a success message and server details
 
 ### 2. Display Data: display-students.php
@@ -233,8 +237,8 @@ This shows you:
 - How to display results in an HTML table
 
 **To use it:**
-1. Right-click `examples/display-students.php`
-2. Select **"Open with Live Server"**
+1. In the **Ports** panel, open port 80 in your browser
+2. Navigate to `/examples/display-students.php`
 3. You'll see all students in a formatted table
 
 ### 3. Search Records: search-products.php
@@ -245,8 +249,8 @@ This shows you:
 - How to display search results
 
 **To use it:**
-1. Right-click `examples/search-products.php`
-2. Select **"Open with Live Server"**
+1. In the **Ports** panel, open port 80 in your browser
+2. Navigate to `/examples/search-products.php`
 3. Search for a product (try "wireless" or "desk")
 4. Results display in cards
 
@@ -258,8 +262,8 @@ This shows you:
 - How to insert a new record into the database
 
 **To use it:**
-1. Right-click `examples/add-customer.php`
-2. Select **"Open with Live Server"**
+1. In the **Ports** panel, open port 80 in your browser
+2. Navigate to `/examples/add-customer.php`
 3. Fill out the form and click "Add Customer"
 4. You'll see a success message with the new customer ID
 
@@ -467,7 +471,7 @@ Your instructor is here to help! Come to office hours or email them with questio
 | Open your Codespace | GitHub → Code → Codespaces → Select yours |
 | Create a new file | Right-click in File Explorer → New File |
 | Preview your website | Click the port 80 link in Ports panel |
-| View a database table | Right-click `.php` file → Open with Live Server |
+| View a PHP page | Open port 80 in browser → navigate to `/examples/file.php` |
 | Save a file | Just keep typing (saves automatically) |
 | Make a commit | Source Control panel → Stage → Message → Commit |
 | Push to GitHub | Click Sync Changes button |

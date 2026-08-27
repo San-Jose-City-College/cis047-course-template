@@ -55,7 +55,7 @@ EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
 SET @normalize_enrollment_date = IF(
-    (SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'students' AND COLUMN_NAME = 'enrollment_date' LIMIT 1) <> 'date',
+    IFNULL((SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'students' AND COLUMN_NAME = 'enrollment_date' LIMIT 1), '') <> 'date',
     'ALTER TABLE students MODIFY COLUMN enrollment_date DATE',
     'SELECT 1'
 );

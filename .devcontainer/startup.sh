@@ -23,6 +23,11 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
+MYSQL_HOST="db"
+MYSQL_USER="root"
+MYSQL_PASSWORD="root"
+COURSE_DB="cis047_course"
+
 print_status() {
     echo -e "${GREEN}✓${NC} $1"
 }
@@ -62,11 +67,11 @@ print_header "Step 1: Waiting for MySQL Database"
 max_attempts=30
 attempt=1
 
-echo "Attempting to connect to MySQL on host: db:3306"
+echo "Attempting to connect to MySQL on host: ${MYSQL_HOST}:3306"
 echo ""
 
 while [ $attempt -le $max_attempts ]; do
-    if MYSQL_PWD="root" mysqladmin ping -h"db" -u"root" --silent > /dev/null 2>&1; then
+    if MYSQL_PWD="$MYSQL_PASSWORD" mysqladmin ping -h"$MYSQL_HOST" -u"$MYSQL_USER" --silent > /dev/null 2>&1; then
         print_status "MySQL is ready and accepting connections"
         break
     fi
@@ -87,9 +92,9 @@ done
 
 echo ""
 print_header "Step 2: Applying Course Database Initialization"
-print_info "Running .devcontainer/init-db.sql against cis047_course..."
+print_info "Running .devcontainer/init-db.sql against ${COURSE_DB}..."
 
-if MYSQL_PWD="root" mysql -h"db" -u"root" cis047_course < /workspaces/cis047-course-template/.devcontainer/init-db.sql; then
+if MYSQL_PWD="$MYSQL_PASSWORD" mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" "$COURSE_DB" < /workspaces/cis047-course-template/.devcontainer/init-db.sql; then
     print_status "Course database schema and sample data verified"
 else
     print_warning "Database initialization reported issues"

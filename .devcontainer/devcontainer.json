@@ -8,41 +8,26 @@
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "forwardPorts": [80, 443, 3306, 3000],
+    "forwardPorts": [80, 3306],
     "portsAttributes": {
         "80": {
             "label": "Web Application (HTTP)",
             "onAutoForward": "notify"
         },
-        "443": {
-            "label": "Web Application (HTTPS)",
-            "onAutoForward": "silent"
-        },
         "3306": {
             "label": "MySQL Database",
-            "onAutoForward": "silent"
-        },
-        "3000": {
-            "label": "Development Server",
             "onAutoForward": "silent"
         }
     },
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-vscode.vscode-live-server",
-                "formulahendry.auto-close-tag",
-                "formulahendry.auto-rename-tag",
-                "esbenp.prettier-vscode",
-                "dbaeumer.vscode-eslint",
                 "felixbecker.php-debug",
-                "bmewburn.vscode-intellicode-api",
                 "felixbecker.php-intellisense",
                 "cweijan.vscode-mysql-client2"
             ],
             "settings": {
                 "editor.formatOnSave": true,
-                "editor.defaultFormatter": "esbenp.prettier-vscode",
                 "[php]": {
                     "editor.defaultFormatter": "felixbecker.php-intellisense"
                 },
@@ -51,8 +36,5 @@
             }
         }
     },
-    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/*.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh",
-    "mounts": [
-        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,readonly"
-    ]
+    "postStartCommand": "chmod +x /workspaces/cis047-course-template/.devcontainer/*.sh && /workspaces/cis047-course-template/.devcontainer/startup.sh"
 }

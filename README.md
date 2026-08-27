@@ -113,9 +113,7 @@ Look at the bottom right of your editor. You'll see a section called **"Ports"**
 
 **[Screenshot: Ports section at bottom of VS Code]**
 
-Click on the **port 80** or **http://localhost** link. This opens your website in a preview window.
-
-Or, right-click on an HTML file and select **"Open with Live Server"**.
+Click on the **port 80** link. This opens your website in a preview window.
 
 ### Viewing in a New Tab
 
@@ -141,13 +139,26 @@ Look in the **`examples/`** folder. You'll find:
 - **`database-connect.php`** - Tests your database connection
 - **`display-students.php`** - Shows student records in a table
 - **`search-products.php`** - Shows how to search and display results
-- **`add-customer.php`** - Shows how to insert new data
 
 ### Running Examples
 
-1. Open an example file in the editor
-2. Right-click and select **"Open with Live Server"**
-3. The preview opens and shows the PHP output
+PHP examples must be served through Apache to work properly — they won't run if you just open the file directly.
+
+**To run a PHP example:**
+
+1. Click the **Ports** tab at the bottom of VS Code
+2. Click the link for **port 80** to open your site in a browser
+3. In the browser address bar, add the path to the example:
+
+   ```
+   http://localhost/examples/database-connect.php
+   http://localhost/examples/display-students.php
+   http://localhost/examples/search-products.php
+   ```
+
+4. The page will load and show the output
+
+> **Why can't I just right-click and open the file?** PHP code runs on the server (Apache), not in your browser. The browser needs to request the file through Apache so the PHP gets executed first.
 
 ### Writing Your Own PHP
 
@@ -194,7 +205,6 @@ The **example files** in the `examples/` folder show you how to query this data 
 1. **database-connect.php** - Verifies the connection works
 2. **display-students.php** - Runs a SELECT query and displays results in a table
 3. **search-products.php** - Takes user input and searches the database
-4. **add-customer.php** - Takes form data and inserts a new record
 
 Open these files to see how to write your own database code!
 
@@ -211,7 +221,7 @@ If you want to see the raw database directly:
 
 ## Example Projects
 
-The `examples/` folder contains complete, working examples:
+The `examples/` folder contains complete, working examples. To run any of them, open the **Ports** panel at the bottom of VS Code, click the port 80 link, and then type the example path in the browser address bar.
 
 ### 1. Test Your Connection: database-connect.php
 
@@ -221,9 +231,8 @@ This shows you:
 - How to display the connection details
 
 **To test it:**
-1. Right-click `examples/database-connect.php`
-2. Select **"Open with Live Server"**
-3. You should see a success message and server details
+1. Open your browser to `http://localhost/examples/database-connect.php`
+2. You should see a success message and server details
 
 ### 2. Display Data: display-students.php
 
@@ -233,9 +242,8 @@ This shows you:
 - How to display results in an HTML table
 
 **To use it:**
-1. Right-click `examples/display-students.php`
-2. Select **"Open with Live Server"**
-3. You'll see all students in a formatted table
+1. Open your browser to `http://localhost/examples/display-students.php`
+2. You'll see all students in a formatted table
 
 ### 3. Search Records: search-products.php
 
@@ -245,23 +253,9 @@ This shows you:
 - How to display search results
 
 **To use it:**
-1. Right-click `examples/search-products.php`
-2. Select **"Open with Live Server"**
-3. Search for a product (try "wireless" or "desk")
-4. Results display in cards
-
-### 4. Insert Data: add-customer.php
-
-This shows you:
-- How to create a form
-- How to validate input
-- How to insert a new record into the database
-
-**To use it:**
-1. Right-click `examples/add-customer.php`
-2. Select **"Open with Live Server"**
-3. Fill out the form and click "Add Customer"
-4. You'll see a success message with the new customer ID
+1. Open your browser to `http://localhost/examples/search-products.php`
+2. Search for a product (try "wireless" or "desk")
+3. Results display in cards
 
 ---
 
@@ -467,7 +461,7 @@ Your instructor is here to help! Come to office hours or email them with questio
 | Open your Codespace | GitHub → Code → Codespaces → Select yours |
 | Create a new file | Right-click in File Explorer → New File |
 | Preview your website | Click the port 80 link in Ports panel |
-| View a database table | Right-click `.php` file → Open with Live Server |
+| View a database table | Open browser to `http://localhost/examples/display-students.php` |
 | Save a file | Just keep typing (saves automatically) |
 | Make a commit | Source Control panel → Stage → Message → Commit |
 | Push to GitHub | Click Sync Changes button |

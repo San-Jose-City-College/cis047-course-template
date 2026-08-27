@@ -71,8 +71,8 @@ A **Codespace** is a complete development environment running in the cloud. Thin
 **First Launch:**
 1. Student clicks "Create codespace on main"
 2. GitHub provisions a container (about 60 seconds)
-3. The `Dockerfile` runs, installing PHP 8.2, Apache, MySQL, extensions
-4. Port 80 (web), 3306 (MySQL) are forwarded to the student's browser
+3. The `Dockerfile` runs, installing PHP 8.3, Apache, and extensions
+4. Port 80 (web) and 3306 (MySQL) are forwarded to the student's browser
 5. Student sees the VS Code editor with your course files
 
 **Subsequent Launches:**
@@ -103,12 +103,19 @@ cis047-course-template/
 ├── examples/
 │   ├── database-connect.php   # Test database connection
 │   ├── display-students.php   # Query and display data
-│   ├── search-products.php    # Search functionality
-│   └── add-customer.php       # Insert data
+│   └── search-products.php    # Search functionality
 │
 ├── database/
-│   ├── sample.sql             # Schema and sample data
-│   └── init.sql               # Database initialization
+│   ├── sample.sql             # Schema and sample data (students + products)
+│   ├── schema.sql             # Course database schema
+│   └── seed.sql               # Seed data for cis047_course
+│
+├── .devcontainer/
+│   ├── devcontainer.json      # Codespaces configuration (START HERE)
+│   ├── Dockerfile             # Container setup (PHP 8.3 + Apache)
+│   ├── docker-compose.yml     # Multi-container orchestration (app + db)
+│   ├── init-db.sql            # Auto-runs to initialize cis047_course
+│   └── startup.sh             # Initialization script
 │
 ├── public/                     # Web root (what students visit)
 │   ├── index.php
@@ -133,8 +140,8 @@ Student's Browser
    Codespace (Browser-based VS Code)
         ↓
    ┌─────────────────┬─────────────────┐
-   ↓                 ↓                 ↓
-Apache (Port 80)  MySQL (Port 3306)  Node.js (Port 3000)
+   ↓                 ↓
+Apache (Port 80)  MySQL (Port 3306)
    ↓
  public/ folder
  (PHP files + HTML/CSS/JS)
@@ -147,19 +154,24 @@ This folder defines your entire environment. When a student launches a Codespace
 **devcontainer.json** - The main configuration file
 ```json
 {
-  "image": "mcr.microsoft.com/devcontainers/php:8.2",
-  "features": {
-    "ghcr.io/devcontainers/features/mysql": "8.0"
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ritwickdey.LiveServer",
-        "felixbecker.php-debug"
-      ]
+    "name": "CIS 047 Web Development Course",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/cis047-course-template",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    "forwardPorts": [80, 3306],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "felixbecker.php-debug",
+                "felixbecker.php-intellisense",
+                "cweijan.vscode-mysql-client2"
+            ]
+        }
     }
-  },
-  "forwardPorts": [80, 3306, 3000]
 }
 ```
 
@@ -332,7 +344,11 @@ git push origin assignments/spring-2024
 
 ### Understanding the Database Setup
 
-The `database/sample.sql` file contains:
+There are two databases used in this course:
+
+**`cis047_course`** — initialized automatically from `.devcontainer/init-db.sql` when the container first starts. Used for the course schema examples.
+
+**`classdb`** — created by `startup.sh` and populated from `database/sample.sql`. This is the database students use for PHP examples. It contains:
 
 **Schema (Table Structure):**
 ```sql
@@ -346,42 +362,42 @@ CREATE TABLE students (
     enrollment_date DATE,
     phone VARCHAR(20)
 );
+
+CREATE TABLE products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(150),
+    category VARCHAR(50),
+    price DECIMAL(10,2),
+    quantity_stock INT,
+    supplier VARCHAR(100),
+    description VARCHAR(255),
+    sku VARCHAR(50) UNIQUE
+);
 ```
 
-**Sample Data (10 students with diverse names):**
-- Names reflect San Jose area demographics
-- Realistic emails and phone numbers
-- Varying GPAs for teaching examples
+**Sample Data:**
+- 10 diverse student records with San Jose area demographics
+- 10 product records across multiple categories
 
 ### Modifying Sample Data
 
-**To add more students:**
+**To add more records or change data:**
 
 1. Open `database/sample.sql` in your Codespace
-2. Scroll to the INSERT statements
-3. Add a new student record:
+2. Edit the INSERT statements as needed
+3. To reload the data, run from the terminal:
 
-```sql
-INSERT INTO students 
-    (first_name, last_name, email, major, gpa, enrollment_date, phone) 
-VALUES
-    ('James', 'Park', 'james.park@university.edu', 'Computer Science', 3.65, '2025-01-20', '(408) 555-0111');
+```bash
+mysql -h db -u root -proot < /workspaces/cis047-course-template/database/sample.sql
 ```
 
-4. Save the file
-5. The database will reload with new data when the container restarts
+> **Note:** `sample.sql` uses `DROP TABLE IF EXISTS` before creating tables, so re-running it resets the data to whatever is in the file.
 
 **To modify table structure:**
 
 1. Open `database/sample.sql`
-2. Find the `CREATE TABLE` statement
-3. Add new columns (example - add a `gpa_status` field):
-
-```sql
-ALTER TABLE students ADD COLUMN gpa_status VARCHAR(50);
-```
-
-4. Restart the Codespace for changes to take effect
+2. Update the `CREATE TABLE` statement
+3. Re-run the file from the terminal (command above) to apply the change
 
 ### Connecting to MySQL Directly
 
@@ -412,14 +428,15 @@ If students corrupt the database (don't worry, this happens!):
 
 1. In the Codespace terminal:
 ```bash
-# Stop and remove MySQL container
+# Restart the database container
 docker-compose down
-
-# Restart (automatically reinitializes from sample.sql)
 docker-compose up -d
+
+# Wait a moment, then re-run startup to reload data
+/workspaces/cis047-course-template/.devcontainer/startup.sh
 ```
 
-2. The database returns to original state with all sample data
+2. The database returns to its original state with all sample data.
 
 ---
 
@@ -445,18 +462,18 @@ node --version
 
 ### Updating PHP
 
-The PHP version is specified in `.devcontainer/devcontainer.json`:
+The PHP version is specified in `.devcontainer/Dockerfile`:
 
-```json
-"image": "mcr.microsoft.com/devcontainers/php:8.2"
+```dockerfile
+FROM mcr.microsoft.com/devcontainers/php:1-8.3-apache
 ```
 
-**To upgrade to PHP 8.3:**
+**To upgrade to a newer PHP version:**
 
-1. Edit `.devcontainer/devcontainer.json`
-2. Change `"php:8.2"` to `"php:8.3"`
+1. Edit `.devcontainer/Dockerfile`
+2. Change `8.3` to the desired version (e.g., `8.4`)
 3. Save and commit
-4. Students' next Codespace rebuild will use PHP 8.3
+4. Students' next Codespace rebuild will use the new PHP version
 
 **Note:** Rebuilding the container takes 60+ seconds.
 
@@ -538,7 +555,10 @@ git push origin main
 
 **2. Update Sample Data**
 
-Update `database/sample.sql` with new student/product data if needed.
+Update `database/sample.sql` with new student/product data if needed, then reload it:
+```bash
+mysql -h db -u root -proot < /workspaces/cis047-course-template/database/sample.sql
+```
 
 **3. Update Course Content**
 
@@ -566,7 +586,6 @@ Create a `CHANGELOG.md` for instructors:
 
 ## Fixed
 - Issue with MySQL connection timeouts
-- Live Server port conflicts
 
 ## Removed
 - Old deprecated examples
@@ -657,11 +676,12 @@ git checkout -b spring-2027 fall-2026
 **Symptoms:** Added data disappears after restart
 
 **Solution:**
-1. Database might be reverting to `sample.sql` on restart
-2. To make persistent changes:
-   - Add INSERT statements to `database/sample.sql`
-   - Or commit the change and restart the container
-3. Remember: Codespaces are temporary; data is preserved but not guaranteed
+1. Data inserted manually (via terminal or examples) is stored in the named Docker volume and survives restarts.
+2. To permanently add data to the default dataset, add INSERT statements to `database/sample.sql` and reload it:
+   ```bash
+   mysql -h db -u root -proot < /workspaces/cis047-course-template/database/sample.sql
+   ```
+3. Remember: If you delete and recreate the Docker volume, all manually-added data is lost.
 
 ### Getting Help
 
@@ -748,9 +768,9 @@ git checkout -b spring-2027 fall-2026
 | Task | How To |
 |------|--------|
 | Add new assignment | Create folder in `assignments/` with README |
-| Update PHP version | Edit `.devcontainer/devcontainer.json`, change `php:8.2` to desired version |
+| Update PHP version | Edit `FROM` line in `.devcontainer/Dockerfile` |
 | Add PHP extension | Edit `.devcontainer/Dockerfile`, add to RUN apt-get install |
-| Modify database | Edit `database/sample.sql` |
+| Modify database | Edit `database/sample.sql`, then reload via terminal |
 | View student code | Go to GitHub → Navigate to assignment folder |
 | Reset database | Terminal: `docker-compose down` then `docker-compose up -d` |
 | Check services | Terminal: `docker ps` |

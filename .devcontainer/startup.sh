@@ -191,6 +191,16 @@ mysql -h"db" -u"root" -p"root" classdb -e "
 
 print_status "Loaded sample student records"
 
+print_info "Loading sample.sql into classdb (students + products)..."
+
+# Load the full sample dataset (creates/replaces students and products tables)
+if [ -f /workspaces/cis047-course-template/database/sample.sql ]; then
+    mysql -h"db" -u"root" -p"root" < /workspaces/cis047-course-template/database/sample.sql 2>/dev/null || true
+    print_status "Sample data loaded (students and products tables ready)"
+else
+    print_warning "database/sample.sql not found - skipping"
+fi
+
 echo ""
 
 # ============================================================================
@@ -301,18 +311,12 @@ echo "      Password: root"
 echo ""
 
 echo "💻 Development Servers:"
-echo "   Node.js: Port 3000 (available for use)"
 echo "   Apache HTTP: Port 80"
-echo "   Apache HTTPS: Port 443"
 echo ""
 
 echo "📦 Pre-installed VS Code Extensions:"
-echo "   • Live Server"
 echo "   • PHP Intellisense & Debug"
 echo "   • MySQL Client"
-echo "   • Prettier (Code Formatter)"
-echo "   • ESLint (JavaScript Linter)"
-echo "   • Auto Close/Rename Tags"
 echo ""
 
 echo "📚 Project Structure:"
@@ -333,7 +337,7 @@ echo ""
 echo "📖 Using the Sample Database:"
 echo "   • Database: classdb"
 echo "   • Connect with: mysql -h db -u root -p classdb"
-echo "   • Tables: students (with sample data)"
+echo "   • Tables: students, products (with sample data)"
 echo "   • Use this for your MySQL assignments and practice"
 echo ""
 

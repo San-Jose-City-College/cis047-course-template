@@ -93,8 +93,6 @@ The left side of your editor shows the **File Explorer**. This is like a folder 
 
 Click on any file in the explorer to open it. You'll see its contents in the main editor window.
 
-**[Screenshot: File explorer with folders and files]**
-
 ### Creating New Files
 
 Right-click in the File Explorer and select **"New File"**. (On a tablet: long-press in the File Explorer.) Type a filename (like `index.html`) and press Enter.
@@ -140,24 +138,14 @@ PHP is a programming language for building dynamic websites. The course includes
 - Search records
 - Add new entries
 
-### Example Files
-
-Look in the **`public/examples/`** folder. You'll find:
-
-- **`database-connect.php`** - Tests your database connection
-- **`display-students.php`** - Shows student records in a table
-- **`search-products.php`** - Shows how to search and display results
-- **`add-customer.php`** - Shows how to insert new data
-
-### Running Examples
+### Running PHP Code
 
 PHP files must be served through the web server (Apache) to execute — they won't work if you open them directly from the file explorer.
 
 1. Open the **Ports** panel at the bottom of the editor
 2. Click the link next to **port 80** to open your site in the browser
-3. Add `/examples/database-connect.php` to the end of the URL
 
-For example: `https://[your-codespace-name].preview.app.github.dev/examples/database-connect.php`
+For example: `https://[your-codespace-name].preview.app.github.dev/php-filename.php`
 
 ### Writing Your Own PHP
 
@@ -197,17 +185,6 @@ The database includes two tables:
 **products** table:
 - product_id, product_name, category, price, quantity_stock, supplier, description, sku
 
-### Using the Examples
-
-The **example files** in the `public/examples/` folder show you how to query this data with PHP:
-
-1. **database-connect.php** - Verifies the connection works
-2. **display-students.php** - Runs a SELECT query and displays results in a table
-3. **search-products.php** - Takes user input and searches the database
-4. **add-customer.php** - Takes form data and inserts a new student record
-
-Open these files to see how to write your own database code!
-
 ### Viewing the Database
 
 If you want to see the raw database directly:
@@ -216,62 +193,6 @@ If you want to see the raw database directly:
 2. Type **"MySQL"** and look for a MySQL client extension
 3. Follow the prompts to connect using the details above
 4. You can now browse tables and run SQL queries directly
-
----
-
-## Example Projects
-
-The `public/examples/` folder contains complete, working examples:
-
-### 1. Test Your Connection: database-connect.php
-
-This shows you:
-- How to create a connection
-- How to check for errors
-- How to display the connection details
-
-**To test it:**
-1. Open port 80 in the Ports panel
-2. Navigate to `/examples/database-connect.php`
-3. You should see a success message and server details
-
-### 2. Display Data: display-students.php
-
-This shows you:
-- How to run a SELECT query
-- How to loop through results
-- How to display results in an HTML table
-
-**To use it:**
-1. Open port 80 in the Ports panel
-2. Navigate to `/examples/display-students.php`
-3. You'll see all students in a formatted table
-
-### 3. Search Records: search-products.php
-
-This shows you:
-- How to create a search form
-- How to use the LIKE operator in SQL
-- How to display search results
-
-**To use it:**
-1. Open port 80 in the Ports panel
-2. Navigate to `/examples/search-products.php`
-3. Search for a product (try "wireless" or "desk")
-4. Results display in cards
-
-### 4. Insert Data: add-customer.php
-
-This shows you:
-- How to create a form
-- How to validate input
-- How to insert a new record into the database
-
-**To use it:**
-1. Open port 80 in the Ports panel
-2. Navigate to `/examples/add-customer.php`
-3. Fill out the form and click "Add Student"
-4. You'll see a success message with the new student ID
 
 ---
 
@@ -311,15 +232,11 @@ Think of it like: `Save locally → Commit with message → Push to cloud`
 
 Look at the left sidebar. You'll see an icon that looks like a **circle with lines** (Source Control). Click it.
 
-**[Screenshot: Source Control icon]**
-
 You'll see a list of files you've changed.
 
 #### Step 2: Stage Your Changes
 
 In the Source Control panel, hover over each file you want to commit. Click the **"+"** button to "stage" it.
-
-**[Screenshot: Staging files]**
 
 Or click **"Stage All Changes"** to stage everything at once.
 
@@ -346,15 +263,11 @@ Press `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac/iPad with keyboard) to commit.
 
 Or click the **"✓"** (checkmark) button. (This is the easiest option on a tablet.)
 
-**[Screenshot: Commit button]**
-
 #### Step 5: Push to GitHub
 
 After committing, you'll see a blue button that says **"Sync Changes"** or **"Push"**.
 
 Click it to upload your work to GitHub.
-
-**[Screenshot: Sync Changes button]**
 
 Congratulations! Your work is now on GitHub. Your instructor can see it. ✓
 

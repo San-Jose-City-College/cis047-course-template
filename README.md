@@ -52,13 +52,9 @@ You'll see a green button that says **"Code"** near the top right. Click it.
 
 When you click the **"Code"** button, you'll see options. Look for **"Codespaces"** and click **"Create codespace on main"**.
 
-**[Screenshot: The Code button menu with Codespace option]**
-
 A new tab will open and load your development environment. This takes about 30-60 seconds. Be patient! ⏳
 
 Once it loads, you'll see a dark editor window that looks like this:
-
-**[Screenshot: VS Code editor showing file explorer on left]**
 
 Congratulations! You're now in your Codespace. This is your personal cloud-based development environment where you can write code, test websites, and store your work.
 
@@ -116,8 +112,6 @@ When you first open your Codespace, the web server starts automatically. You'll 
 ### Opening Your Website Preview
 
 Look at the bottom right of your editor. You'll see a section called **"Ports"**.
-
-**[Screenshot: Ports section at bottom of VS Code]**
 
 Click on the **port 80** or **http://localhost** link. This opens your website in a preview window.
 

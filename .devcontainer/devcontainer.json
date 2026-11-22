@@ -8,16 +8,13 @@
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "forwardPorts": [80, 3306],
+    "forwardPorts": [80],
     "portsAttributes": {
         "80": {
             "label": "Web Application (HTTP)",
-            "onAutoForward": "notify"
+            "onAutoForward": "notify",
+            "visibility": "private"
         },
-        "3306": {
-            "label": "MySQL Database",
-            "onAutoForward": "silent"
-        }
     },
     "customizations": {
         "vscode": {

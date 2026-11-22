@@ -37,6 +37,10 @@ COPY phpmyadmin.conf \
 COPY phpmyadmin-config.inc.php \
     /usr/share/phpmyadmin/config.inc.php
 
+RUN chmod 644 /usr/share/phpmyadmin/config.inc.php \
+    && a2enconf phpmyadmin \
+    && mkdir -p /var/lib/phpmyadmin
+
 RUN a2enconf phpmyadmin \
     && mkdir -p /var/lib/phpmyadmin \
     && chmod 644 /usr/share/phpmyadmin/config.inc.php

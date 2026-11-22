@@ -3,6 +3,7 @@ FROM php:8.3-apache
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     mariadb-client \
+    libonig-dev \
     git \
     zip \
     unzip \
@@ -16,7 +17,29 @@ RUN docker-php-ext-install \
     mysqli \
     pdo \
     pdo_mysql \
-    opcache
+    opcache \
+    mbstring
+
+# Install phpMyAdmin 5.2.3
+RUN curl -fSL \
+    https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAdmin-5.2.3-all-languages.tar.gz \
+    -o /tmp/phpmyadmin.tar.gz \
+    && mkdir -p /usr/share/phpmyadmin \
+    && tar -xzf /tmp/phpmyadmin.tar.gz \
+       -C /usr/share/phpmyadmin \
+       --strip-components=1 \
+    && rm /tmp/phpmyadmin.tar.gz
+
+# Configure phpMyAdmin and Apache
+COPY phpmyadmin.conf \
+    /etc/apache2/conf-available/phpmyadmin.conf
+
+COPY phpmyadmin-config.inc.php \
+    /usr/share/phpmyadmin/config.inc.php
+
+RUN a2enconf phpmyadmin \
+    && mkdir -p /var/lib/phpmyadmin \
+    && chmod 644 /usr/share/phpmyadmin/config.inc.php
 
 # Install and enable Xdebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug

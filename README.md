@@ -179,14 +179,41 @@ The database includes two tables:
 **products** table:
 - product_id, product_name, category, price, quantity_stock, supplier, description, sku
 
-### Viewing the Database
+### Managing Your Database with phpMyAdmin
 
-If you want to see the raw database directly:
+Your CIS 047 Codespace includes phpMyAdmin, a web-based application for managing MySQL databases.
 
-1. Open the **VS Code Command Palette** (press `Ctrl+Shift+P` on Windows, `Cmd+Shift+P` on Mac, or tap the **`...`** menu in the toolbar on a tablet)
-2. Type **"MySQL"** and look for a MySQL client extension
-3. Follow the prompts to connect using the details above
-4. You can now browse tables and run SQL queries directly
+**Opening phpMyAdmin**
+
+1. Open your Codespace.
+2. Click the **Ports** tab at the bottom of VS Code.
+3. Find **Web Application (HTTP)** on port 80.
+4. Click its forwarded HTTPS address.
+5. Add `/phpMyAdmin/` to the end of the URL.
+   ```For example, if your Codespace is named zany-spoon,
+
+   the URL might look like:
+   --> https://zany-spoon-80.app.github.dev/phpMyAdmin/
+
+   Your actual Codespace name will probably be longer.
+
+   The easiest workflow to access the phpMyAdmin database manager:
+   Ports → Port 80 → Click forwarded address → Append /phpMyAdmin/
+
+**Logging in**
+
+Use these credentials:
+
+- **Username:** `cis047_user`
+- **Password:** `cis047_password`
+
+After logging in, select the `classdb` database in the left sidebar.
+
+You can now view database tables, browse records, run SQL queries, and work on your database assignments.
+
+**A note for tablet users:** Your device may automatically capitalize the first letter of your username or password. These credentials are case-sensitive. If necessary, copy and paste them exactly as shown.
+
+**Security:** Keep your Codespace's port 80 visibility set to Private. These credentials are intended only for your course development environment.
 
 ---
 
@@ -198,7 +225,8 @@ Your files are **saved automatically** as you type. You don't need to press Ctrl
 
 ### Where Are My Files?
 
-All your files are stored in the cloud in your Codespace. They're also backed up on GitHub.
+All your files are stored in the cloud in your Codespace. 
+They must be committed and pushed to the repository to be backed up on GitHub.
 
 ---
 
@@ -384,6 +412,7 @@ Your instructor is here to help! Come to office hours or email them with questio
 | Open your Codespace | GitHub → Code → Codespaces → Select yours |
 | Create a new file | Right-click (or long-press on tablet) in File Explorer → New File |
 | Preview your website | Click the port 80 link in Ports panel |
+| Access phpMyAdmin | Open port 80 and add /phpMyAdmin/ |
 | View a database table | Open port 80 link → navigate to `/examples/display-students.php` |
 | Save a file | Just keep typing (saves automatically) |
 | Make a commit | Source Control panel → Stage → Message → click ✓ button |

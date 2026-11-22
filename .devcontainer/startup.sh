@@ -25,6 +25,22 @@ echo "  CIS 047 - Environment Initialization"
 echo "=========================================="
 echo ""
 
+# Initialize phpMyAdmin cookie encryption secret
+SECRET_FILE="/var/lib/phpmyadmin/.secret"
+
+mkdir -p /var/lib/phpmyadmin
+
+if [ ! -s "$SECRET_FILE" ]; then
+    php -r "echo bin2hex(random_bytes(16));" \
+        > "$SECRET_FILE"
+fi
+
+chown root:www-data "$SECRET_FILE"
+chmod 640 "$SECRET_FILE"
+
+print_status "phpMyAdmin configuration is ready"
+
+
 # ============================================================================
 # Wait for MySQL
 # ============================================================================
@@ -79,6 +95,11 @@ echo "    Host:      db"
 echo "    Database:  classdb"
 echo "    User:      cis047_user"
 echo "    Password:  cis047_password"
+echo "    phpMyAdmin: Add /phpMyAdmin/ to your port 80 URL"
+echo "     --> For example, if your Codespace is named zany-spoon,"
+echo "     --> the URL might look like:"
+echo "     --> https://zany-spoon-80.app.github.dev/phpMyAdmin/"
+echo "     --> Your actual Codespace name will probably be longer."
 echo ""
 echo "  Example pages (open port 80 first):"
 echo "    /examples/database-connect.php"
